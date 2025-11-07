@@ -1,7 +1,7 @@
 import pandas as pd
 import json
 
-def analyze(filename="raw-data/baseline/brakeman-reports/brakeman-report.json"):
+def analyze_brakeman_json_report(filename="../raw-data/baseline/brakeman-reports/brakeman-report.json"):
     """
     Analisa um relatório JSON do Brakeman e conta
     as vulnerabilidades por nível.
@@ -49,4 +49,4 @@ def analyze(filename="raw-data/baseline/brakeman-reports/brakeman-report.json"):
 
 # Executa a função
 if __name__ == "__main__":
-    analyze()
+    analyze_brakeman_json_report()

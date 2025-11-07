@@ -1,7 +1,7 @@
 import pandas as pd
 import json
 
-def analyze_trivy_json_report(filename="raw-data/baseline/trivy-reports/trivy-report.json"):
+def analyze_trivy_json_report(filename="../raw-data/baseline/trivy-reports/trivy-report.json"):
     """
     Analisa um relatório JSON do Trivy usando Pandas, extrai
     vulnerabilidades e segredos, e os conta por nível de severidade.
@@ -62,7 +62,7 @@ def analyze_trivy_json_report(filename="raw-data/baseline/trivy-reports/trivy-re
         severity_counts = df['Severity'].value_counts()
         
         print(f"\nTotal de problemas encontrados: {len(df)}")
-        print("\n--- Contagem por Nível de Severidade (Pandas) ---")
+        print("\n--- Contagem por Nível de Severidade ---")
         print(severity_counts)
 
     except FileNotFoundError:
