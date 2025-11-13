@@ -1,0 +1,121 @@
+# Definição dos estágios da pipeline
+stages:
+  - test
+  - build
+
+# Define a imagem Docker base para os jobs (Rails + Dependências)
+image: lappis/decidim-govbr:v1-release  # Imagem com Ruby, Bundler e o ambiente completo
+
+services:
+  - postgres:13.2-alpine  # Serviço do Postgres
+  - redis:6.0.12-alpine  # Serviço do Redis
+
+# Variáveis de ambiente globais utilizadas em todos os jobs
+variables:
+  POSTGRES_DB: myapp_test
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: password
+  RAILS_ENV: test
+  REDIS_URL: redis://localhost:6379
+  REDIS_CACHE_URL: redis://localhost:6380
+
+# Job para análise de segurança com Brakeman
+SAST:
+  stage: test
+  image: docker:20.10.16
+  services:
+    - name: docker:20.10.16-dind
+      alias: docker
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_DRIVER: overlay2
+    SMTP_PASSWORD: $SMTP_PASSWORD 
+    SMTP_TO_EMAILS: "$SMTP_TO_EMAILS" 
+    SMTP_FROM_EMAIL: "$SMTP_FROM_EMAIL"
+  script:
+    - echo "Criando diretório para o relatório..."
+    - mkdir -p "$GCL_PROJECT_DIR_ON_HOST/reports"
+    
+    # Verificação de dependências (Ruby/Rails) no ambiente
+    - echo "Verificando versões do Ruby e Rails..."
+    - docker run --rm presidentbeef/brakeman ruby --version
+    - docker run --rm presidentbeef/brakeman rails --version
+    
+    - echo "Rodando Brakeman via Docker..."
+    - docker run --rm -v "$GCL_PROJECT_DIR_ON_HOST":/app -w /app presidentbeef/brakeman -o /app/reports/brakeman-report.html -o /app/reports/brakeman-report.json || true
+
+
+    # Depuração
+    - echo "Verificando se o relatório foi gerado..."
+    - ls -l "$GCL_PROJECT_DIR_ON_HOST/reports"
+    
+
+    - echo "Exibindo o conteúdo do relatório HTML gerado..."
+    - cat "$GCL_PROJECT_DIR_ON_HOST/reports/brakeman-report.html"
+    
+   
+    - echo "Instalando o Ruby e as bibliotecas necessárias..."
+    - apk add --no-cache ruby ruby-dev
+    - gem install bundler net-smtp
+    - ruby --version 
+ 
+   
+    - if [ ! -f "$GCL_PROJECT_DIR_ON_HOST/reports/brakeman-report.html" ]; then echo "Relatório não encontrado, abortando e-mail."; exit 1; fi
+    
+    # Depuração
+    - echo "Exibindo versão do Brakeman..."
+    - docker run --rm presidentbeef/brakeman --version
+    - echo "Verificando o status de segurança (Média/Alta Confiança)..."
+    - docker run --rm -v "$GCL_PROJECT_DIR_ON_HOST":/app -w /app presidentbeef/brakeman -w2 --exit-on-warn
+    - echo "Verificação de status concluída."
+
+  allow_failure: true  
+  artifacts:
+    when: always
+    paths:
+      - reports/brakeman-report.html
+      - reports/brakeman-report.json
+    expire_in: 7 days
+
+# Job para análise de vulnerabilidades com Trivy
+SCA:
+  stage: test
+  image: 
+    name: aquasec/trivy:latest
+    entrypoint: [""]
+  script:
+    - echo "Criando diretório para o relatório..."  
+    - mkdir -p "$CI_PROJECT_DIR/reports"
+
+    - echo "Baixando o template HTML do repositório do Trivy..."
+    - wget https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl -O "$CI_PROJECT_DIR/reports/html.tpl"
+
+    - echo "Executando scan do filesystem com Trivy..."
+    - trivy fs . --format json --output "$CI_PROJECT_DIR/reports/trivy-report.json" || true
+    - trivy fs . --format template --template "@$CI_PROJECT_DIR/reports/html.tpl" --output "$CI_PROJECT_DIR/reports/trivy-report.html" || true
+    
+    - echo "Exibindo resumo das vulnerabilidades encontradas..."
+    - trivy fs . --severity MEDIUM,HIGH,CRITICAL --exit-code 1
+    
+  allow_failure: true
+  artifacts:
+    when: always
+    paths:
+      - reports/trivy-report.json
+      - reports/trivy-report.html
+    expire_in: 7 days
+    
+
+# Job para construir a imagem Docker da aplicação
+Build:
+  stage: build
+  image: docker:20.10.16
+  services:
+    - docker:20.10.16-dind
+  script:
+    - echo "Iniciando build."
+    - docker pull myapp:1.0 || true
+    - docker build --cache-from myapp:1.0 -t myapp:1.0 .
+    - echo "Sucesso de build."
+  cache:
+    key: "$CI_COMMIT_REF_NAME"

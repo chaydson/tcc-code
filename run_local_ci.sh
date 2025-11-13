@@ -82,15 +82,8 @@ cleanup() {
   echo "🧹 EXECUTANDO LIMPEZA DE AMBIENTE..."
   echo "======================================================================="
   
-  echo "Parando e removendo containers do 'docker compose down'..."
-  docker compose down -v --remove-orphans
-  echo "Containers parados."
-  
-  echo "Removendo todas as imagens Docker não utilizadas (prune)..."
-  docker container prune -f
-  docker volume prune -f
-  docker image prune -a -f
-  docker builder prune -f
+  echo "Parando containers Docker..."
+  docker compose down 
   echo ""
   echo "Limpeza de Docker concluída."
 }
