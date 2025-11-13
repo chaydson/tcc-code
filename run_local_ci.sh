@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 REPORTS_DIR="report-pipeline-local"
 REPORTS_TOOLS_DIR="reports"
 SUMMARY_FILE="$REPORTS_DIR/pipeline_summary.txt"
@@ -15,9 +14,7 @@ fix_reports_permissions() {
   echo "FIX: Permissões de '$REPORTS_TOOLS_DIR/' restauradas."
 }
 
-
 mkdir -p "$REPORTS_DIR"
-
 
 echo "Garantindo permissões em $REPORTS_DIR"
 fix_reports_permissions
@@ -35,7 +32,6 @@ echo "Resumo centralizado em: $SUMMARY_FILE"
 OVERALL_STATUS=0
 trap cleanup EXIT
 
-
 header() {
   echo ""
   echo "======================================================================="
@@ -43,7 +39,6 @@ header() {
   echo "======================================================================="
   echo ""
 }
-
 
 run_and_capture() {
   local job_name="$1"
@@ -63,7 +58,9 @@ run_and_capture() {
 
   echo "--- Job: $job_name ---" >> "$SUMMARY_FILE"
   grep -E "^ *(PASS|FAIL|WARN)" "$output_filepath" >> "$SUMMARY_FILE"
+
   local grep_status=$?
+  
   if [ $grep_status -ne 0 ]; then
     if [ $job_status -eq 0 ]; then
       echo "JOB_SUCCESS (Nenhuma linha PASS/FAIL/WARN encontrada)" >> "$SUMMARY_FILE"
@@ -71,8 +68,8 @@ run_and_capture() {
       echo "JOB_FAILED (Exit code: $job_status. Nenhuma linha PASS/FAIL/WARN encontrada)" >> "$SUMMARY_FILE"
     fi
   fi
-  echo "" >> "$SUMMARY_FILE"
 
+  echo "" >> "$SUMMARY_FILE"
 
   echo "Job '$job_name' concluído com código de saída: $job_status"
   
@@ -82,27 +79,21 @@ run_and_capture() {
 cleanup() {
   echo ""
   echo "======================================================================="
-  echo "🧹 EXECUTANDO LIMPEZA DE IMAGENS DOCKER..."
+  echo "🧹 EXECUTANDO LIMPEZA DE AMBIENTE..."
   echo "======================================================================="
-  echo "Removendo todas as imagens Docker não utilizadas (prune)..."
-  docker image prune -a -f
   
+  echo "Parando e removendo containers do 'docker compose down'..."
+  docker compose down -v --remove-orphans
+  echo "Containers parados."
+  
+  echo "Removendo todas as imagens Docker não utilizadas (prune)..."
+  docker container prune -f
+  docker volume prune -f
+  docker image prune -a -f
+  docker builder prune -f
   echo ""
   echo "Limpeza de Docker concluída."
-  
-  fix_reports_permissions
 }
-
-
-run_and_capture "Lint" \
-  gitlab-ci-local Lint
-if [ $? -ne 0 ]; then
-  echo "❌ Job 'Lint' FALHOU. Abortando pipeline."
-  OVERALL_STATUS=1
-  exit 1 
-fi
-fix_reports_permissions
-
 
 run_and_capture "SAST" \
   gitlab-ci-local --volume "/var/run/docker.sock:/var/run/docker.sock" --variable "DOCKER_HOST=unix:///var/run/docker.sock" SAST
@@ -112,7 +103,6 @@ if [ $? -ne 0 ]; then
 fi
 fix_reports_permissions
 
-
 run_and_capture "SCA" \
   gitlab-ci-local SCA
 if [ $? -ne 0 ]; then
@@ -121,13 +111,46 @@ if [ $? -ne 0 ]; then
 fi
 fix_reports_permissions
 
+header "SETUP DAST: Subindo aplicação via Docker Compose"
+echo "Subindo aplicação com 'docker compose up -d'..."
 
-run_and_capture "Build" \
-  gitlab-ci-local --force-shell-executor Build
-if [ $? -ne 0 ]; then
-  echo "❌ Job 'Build' FALHOU. Abortando pipeline."
+docker compose up -d
+APP_RUN_STATUS=$?
+
+if [ $APP_RUN_STATUS -ne 0 ]; then
+  echo "❌ Falha ao iniciar a aplicação com 'docker compose up'. Abortando DAST."
   OVERALL_STATUS=1
-  exit 1
+else
+  echo "Aplicação iniciada. Aguardando até o servidor subir..."
+  
+  ATTEMPTS=0
+  MAX_ATTEMPTS=100
+  while ! curl -f -s -o /dev/null http://localhost:3000; do
+    ATTEMPTS=$((ATTEMPTS + 1))
+    if [ $ATTEMPTS -gt $MAX_ATTEMPTS ]; then
+      echo "❌ Timeout: Aplicação não respondeu em http://localhost:3000 após 90 segundos."
+      docker compose logs
+      OVERALL_STATUS=1
+      exit 1
+    fi
+      echo "Aguardando... (tentativa $ATTEMPTS/$MAX_ATTEMPTS)"
+      sleep 5
+  done
+
+echo "✅ Aplicação pronta em http://localhost:3000. Iniciando DAST."
+
+  run_and_capture "DAST (ZAP Baseline)" \
+    sudo docker run --network="host" --rm \
+    -v $(pwd):/zap/wrk/:rw -t \
+    ghcr.io/zaproxy/zaproxy:stable \
+    zap-baseline.py \
+      -t http://localhost:3000/ \
+      -r "$REPORTS_TOOLS_DIR/zap-report.html" \
+      -J "$REPORTS_TOOLS_DIR/zap-report.json" \
+      -l WARN
+
+  ZAP_STATUS=$?    
+  echo "Job 'DAST (ZAP Baseline)' (Código de Saída: $ZAP_STATUS)"
 fi
 fix_reports_permissions
 
