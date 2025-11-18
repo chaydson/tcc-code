@@ -22,9 +22,9 @@ variables:
 # Job para análise de segurança com Brakeman
 SAST:
   stage: test
-  image: docker:20.10.16
+  image: docker:latest
   services:
-    - name: docker:20.10.16-dind
+    - name: docker:latest
       alias: docker
   variables:
     DOCKER_HOST: tcp://docker:2375
@@ -109,9 +109,9 @@ SCA:
 # Job para construir a imagem Docker da aplicação
 Build:
   stage: build
-  image: docker:20.10.16
+  image: docker:latest
   services:
-    - docker:20.10.16-dind
+    - docker:latest-dind
   script:
     - echo "Iniciando build."
     - docker pull myapp:1.0 || true
