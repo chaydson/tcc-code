@@ -33,7 +33,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-COMMITS=$(git log "$BRANCH_NAME" --merges -n 86 --pretty=format:"%H")
+COMMITS=$(git log "$BRANCH_NAME" --merges --since="86 days ago" --pretty=format:"%H")
 
 if [ -z "$COMMITS" ]; then
   echo "Nenhum commit de merge encontrado nos últimos 14 dias."
