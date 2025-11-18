@@ -1,0 +1,62 @@
+Total of 368 URLs
+WARN-NEW: Cross-Domain JavaScript Source File Inclusion [10017] x 5 
+	http://localhost:3000/ (200 OK)
+	http://localhost:3000/meetings/ (200 OK)
+	http://localhost:3000/search (200 OK)
+	http://localhost:3000/404 (404 Not Found)
+	http://localhost:3000/users/sign_in (200 OK)
+WARN-NEW: X-Content-Type-Options Header Missing [10021] x 10 
+	http://localhost:3000/robots.txt (200 OK)
+	http://localhost:3000/sitemap.xml (200 OK)
+	http://localhost:3000/decidim-packs/vendors-node_modules_webpack-dev-server_client_index_js_protocol_ws_3A_hostname_localhost_por-db74fa-2c4b2633a7a9eaff2565.js (200 OK)
+	http://localhost:3000/decidim-packs/vendors-node_modules_quill_formats_code_js-2c4b2633a7a9eaff2565.js (200 OK)
+	http://localhost:3000/decidim-packs/usr_local_bundle_gems_decidim-core-0_27_2_app_packs_src_decidim_editor_clipboard_override_js--d4d9fa-2c4b2633a7a9eaff2565.js (200 OK)
+WARN-NEW: Server Leaks Information via "X-Powered-By" HTTP Response Header Field(s) [10037] x 8 
+	http://localhost:3000/decidim-packs/vendors-node_modules_webpack-dev-server_client_index_js_protocol_ws_3A_hostname_localhost_por-db74fa-2c4b2633a7a9eaff2565.js (200 OK)
+	http://localhost:3000/decidim-packs/vendors-node_modules_quill_formats_code_js-2c4b2633a7a9eaff2565.js (200 OK)
+	http://localhost:3000/decidim-packs/usr_local_bundle_gems_decidim-core-0_27_2_app_packs_src_decidim_editor_clipboard_override_js--d4d9fa-2c4b2633a7a9eaff2565.js (200 OK)
+	http://localhost:3000/decidim-packs/app_packs_src_decidim_direct_uploads_upload_field_js-usr_local_bundle_gems_decidim-core-0_27_-c9ca45-2c4b2633a7a9eaff2565.js (200 OK)
+	http://localhost:3000/decidim-packs/decidim_system-2c4b2633a7a9eaff2565.js (200 OK)
+WARN-NEW: Content Security Policy (CSP) Header Not Set [10038] x 13 
+	http://localhost:3000/ (200 OK)
+	http://localhost:3000/assets/ (404 Not Found)
+	http://localhost:3000/sitemaps/ (404 Not Found)
+	http://localhost:3000/rails/ (404 Not Found)
+	http://localhost:3000/robots.txt$ (404 Not Found)
+WARN-NEW: Permissions Policy Header Not Set [10063] x 11 
+	http://localhost:3000/ (200 OK)
+	http://localhost:3000/assets/ (404 Not Found)
+	http://localhost:3000/rails/ (404 Not Found)
+	http://localhost:3000/sitemaps/ (404 Not Found)
+	http://localhost:3000/robots.txt$ (404 Not Found)
+WARN-NEW: Timestamp Disclosure - Unix [10096] x 18 
+	http://localhost:3000/decidim-packs/vendors-node_modules_rails_activestorage_app_assets_javascripts_activestorage_js-node_modules-be4d20-2c4b2633a7a9eaff2565.js (200 OK)
+	http://localhost:3000/decidim-packs/vendors-node_modules_rails_activestorage_app_assets_javascripts_activestorage_js-node_modules-be4d20-2c4b2633a7a9eaff2565.js (200 OK)
+	http://localhost:3000/decidim-packs/vendors-node_modules_rails_activestorage_app_assets_javascripts_activestorage_js-node_modules-be4d20-2c4b2633a7a9eaff2565.js (200 OK)
+	http://localhost:3000/decidim-packs/vendors-node_modules_rails_activestorage_app_assets_javascripts_activestorage_js-node_modules-be4d20-2c4b2633a7a9eaff2565.js (200 OK)
+	http://localhost:3000/decidim-packs/vendors-node_modules_rails_activestorage_app_assets_javascripts_activestorage_js-node_modules-be4d20-2c4b2633a7a9eaff2565.js (200 OK)
+WARN-NEW: Cross-Domain Misconfiguration [10098] x 8 
+	http://localhost:3000/decidim-packs/vendors-node_modules_webpack-dev-server_client_index_js_protocol_ws_3A_hostname_localhost_por-db74fa-2c4b2633a7a9eaff2565.js (200 OK)
+	http://localhost:3000/decidim-packs/vendors-node_modules_quill_formats_code_js-2c4b2633a7a9eaff2565.js (200 OK)
+	http://localhost:3000/decidim-packs/usr_local_bundle_gems_decidim-core-0_27_2_app_packs_src_decidim_editor_clipboard_override_js--d4d9fa-2c4b2633a7a9eaff2565.js (200 OK)
+	http://localhost:3000/decidim-packs/app_packs_src_decidim_direct_uploads_upload_field_js-usr_local_bundle_gems_decidim-core-0_27_-c9ca45-2c4b2633a7a9eaff2565.js (200 OK)
+	http://localhost:3000/decidim-packs/vendors-node_modules_rails_activestorage_app_assets_javascripts_activestorage_js-node_modules-be4d20-2c4b2633a7a9eaff2565.js (200 OK)
+WARN-NEW: Private IP Disclosure [2] x 12 
+	http://localhost:3000/rails/ (404 Not Found)
+	http://localhost:3000/assets/ (404 Not Found)
+	http://localhost:3000/sitemaps/ (404 Not Found)
+	http://localhost:3000/robots.txt$ (404 Not Found)
+	http://localhost:3000/proposals/ (404 Not Found)
+WARN-NEW: Sub Resource Integrity Attribute Missing [90003] x 6 
+	http://localhost:3000/ (200 OK)
+	http://localhost:3000/ (200 OK)
+	http://localhost:3000/ (200 OK)
+	http://localhost:3000/ (200 OK)
+	http://localhost:3000/ (200 OK)
+WARN-NEW: Insufficient Site Isolation Against Spectre Vulnerability [90004] x 10 
+	http://localhost:3000/ (200 OK)
+	http://localhost:3000/ (200 OK)
+	http://localhost:3000/ (200 OK)
+	http://localhost:3000/robots.txt (200 OK)
+	http://localhost:3000/sitemap.xml (200 OK)
+FAIL-NEW: 0	FAIL-INPROG: 0	WARN-NEW: 10	WARN-INPROG: 0	INFO: 0	IGNORE: 0	PASS: 56
