@@ -1,14 +1,14 @@
-parsing and downloads finished in 68 ms.
-json schema validated in 236 ms
+parsing and downloads finished in 57 ms.
+json schema validated in 242 ms
 SCA starting aquasec/trivy:latest (test)
-SCA pulled aquasec/trivy:latest in 5.41 s
-SCA copied to docker volumes in 1.01 s
-SCA pulled redis:6.0.12-alpine in 4.43 s
-SCA started service image: redis:6.0.12-alpine with aliases: redis in 334 ms
-SCA service image: redis:6.0.12-alpine healthcheck passed in 393 ms
-SCA pulled postgres:13.2-alpine in 7.28 s
-SCA started service image: postgres:13.2-alpine with aliases: postgres in 711 ms
-SCA service image: postgres:13.2-alpine healthcheck passed in 1.38 s
+SCA pulled aquasec/trivy:latest in 4.79 s
+SCA copied to docker volumes in 521 ms
+SCA pulled postgres:13.2-alpine in 5.54 s
+SCA started service image: postgres:13.2-alpine with aliases: postgres in 254 ms
+SCA pulled redis:6.0.12-alpine in 5.8 s
+SCA started service image: redis:6.0.12-alpine with aliases: redis in 215 ms
+SCA service image: redis:6.0.12-alpine healthcheck passed in 256 ms
+SCA service image: postgres:13.2-alpine healthcheck passed in 1.29 s
 SCA $ echo "Criando diretório para o relatório..."
 SCA > Criando diretório para o relatório...
 SCA $ mkdir -p "$CI_PROJECT_DIR/reports"
@@ -22,41 +22,41 @@ SCA > '/builds/lappis-unb/decidimbr/decidim-govbr/reports/html.tpl' saved
 SCA $ echo "Executando scan do filesystem com Trivy..."
 SCA > Executando scan do filesystem com Trivy...
 SCA $ trivy fs . --format json --output "$CI_PROJECT_DIR/reports/trivy-report.json" || true
-SCA > 2025-11-18T06:34:54Z	INFO	[vulndb] Need to update DB
-SCA > 2025-11-18T06:34:54Z	INFO	[vulndb] Downloading vulnerability DB...
-SCA > 2025-11-18T06:34:54Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
-SCA > 143.25 KiB / 75.22 MiB [>____________________________________________________________] 0.19% ? p/s ?959.17 KiB / 75.22 MiB [>____________________________________________________________] 1.25% ? p/s ?4.86 MiB / 75.22 MiB [---->__________________________________________________________] 6.46% ? p/s ?9.80 MiB / 75.22 MiB [------>__________________________________________] 13.02% 16.10 MiB p/s ETA 4s14.72 MiB / 75.22 MiB [--------->______________________________________] 19.57% 16.10 MiB p/s ETA 3s19.69 MiB / 75.22 MiB [------------>___________________________________] 26.17% 16.10 MiB p/s ETA 3s24.68 MiB / 75.22 MiB [--------------->________________________________] 32.81% 16.66 MiB p/s ETA 3s29.66 MiB / 75.22 MiB [------------------>_____________________________] 39.44% 16.66 MiB p/s ETA 2s34.61 MiB / 75.22 MiB [---------------------->_________________________] 46.01% 16.66 MiB p/s ETA 2s39.39 MiB / 75.22 MiB [------------------------->______________________] 52.37% 17.17 MiB p/s ETA 2s44.36 MiB / 75.22 MiB [---------------------------->___________________] 58.97% 17.17 MiB p/s ETA 1s49.29 MiB / 75.22 MiB [------------------------------->________________] 65.54% 17.17 MiB p/s ETA 1s54.26 MiB / 75.22 MiB [---------------------------------->_____________] 72.14% 17.66 MiB p/s ETA 1s59.23 MiB / 75.22 MiB [------------------------------------->__________] 78.75% 17.66 MiB p/s ETA 0s64.22 MiB / 75.22 MiB [---------------------------------------->_______] 85.38% 17.66 MiB p/s ETA 0s69.22 MiB / 75.22 MiB [-------------------------------------------->___] 92.03% 18.13 MiB p/s ETA 0s74.21 MiB / 75.22 MiB [----------------------------------------------->] 98.66% 18.13 MiB p/s ETA 0s75.22 MiB / 75.22 MiB [---------------------------------------------->] 100.00% 18.13 MiB p/s ETA 0s75.22 MiB / 75.22 MiB [---------------------------------------------->] 100.00% 17.60 MiB p/s ETA 0s75.22 MiB / 75.22 MiB [---------------------------------------------->] 100.00% 17.60 MiB p/s ETA 0s75.22 MiB / 75.22 MiB [---------------------------------------------->] 100.00% 17.60 MiB p/s ETA 0s75.22 MiB / 75.22 MiB [---------------------------------------------->] 100.00% 16.47 MiB p/s ETA 0s75.22 MiB / 75.22 MiB [---------------------------------------------->] 100.00% 16.47 MiB p/s ETA 0s75.22 MiB / 75.22 MiB [---------------------------------------------->] 100.00% 16.47 MiB p/s ETA 0s75.22 MiB / 75.22 MiB [---------------------------------------------->] 100.00% 15.40 MiB p/s ETA 0s75.22 MiB / 75.22 MiB [---------------------------------------------->] 100.00% 15.40 MiB p/s ETA 0s75.22 MiB / 75.22 MiB [---------------------------------------------->] 100.00% 15.40 MiB p/s ETA 0s75.22 MiB / 75.22 MiB [-------------------------------------------------] 100.00% 14.17 MiB p/s 5.5s2025-11-18T06:35:04Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
-SCA > 2025-11-18T06:35:04Z	INFO	[vuln] Vulnerability scanning is enabled
-SCA > 2025-11-18T06:35:04Z	INFO	[secret] Secret scanning is enabled
-SCA > 2025-11-18T06:35:04Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln' to disable secret scanning
-SCA > 2025-11-18T06:35:04Z	INFO	[secret] Please see https://trivy.dev/v0.67/docs/scanner/secret#recommendation for faster secret detection
-SCA > 2025-11-18T06:35:04Z	INFO	Suppressing dependencies for development and testing. To display them, try the '--include-dev-deps' flag.
-SCA > 2025-11-18T06:35:04Z	INFO	Number of language-specific files	num=2
-SCA > 2025-11-18T06:35:04Z	INFO	[bundler] Detecting vulnerabilities...
-SCA > 2025-11-18T06:35:04Z	INFO	[yarn] Detecting vulnerabilities...
-SCA > 2025-11-18T06:35:04Z	WARN	Using severities from other vendors for some vulnerabilities. Read https://trivy.dev/v0.67/docs/scanner/vulnerability#severity-selection for details.
+SCA > 2025-11-18T07:49:22Z	INFO	[vulndb] Need to update DB
+SCA > 2025-11-18T07:49:22Z	INFO	[vulndb] Downloading vulnerability DB...
+SCA > 2025-11-18T07:49:22Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
+SCA > 79.25 KiB / 75.21 MiB [>_____________________________________________________________] 0.10% ? p/s ?287.23 KiB / 75.21 MiB [>____________________________________________________________] 0.37% ? p/s ?1.45 MiB / 75.21 MiB [->_____________________________________________________________] 1.93% ? p/s ?6.11 MiB / 75.21 MiB [---->_____________________________________________] 8.12% 10.06 MiB p/s ETA 6s11.09 MiB / 75.21 MiB [------->________________________________________] 14.75% 10.06 MiB p/s ETA 6s16.11 MiB / 75.21 MiB [---------->_____________________________________] 21.42% 10.06 MiB p/s ETA 5s21.12 MiB / 75.21 MiB [------------->__________________________________] 28.09% 11.02 MiB p/s ETA 4s23.30 MiB / 75.21 MiB [-------------->_________________________________] 30.98% 11.02 MiB p/s ETA 4s28.33 MiB / 75.21 MiB [------------------>_____________________________] 37.67% 11.02 MiB p/s ETA 4s33.15 MiB / 75.21 MiB [--------------------->__________________________] 44.07% 11.61 MiB p/s ETA 3s38.15 MiB / 75.21 MiB [------------------------>_______________________] 50.72% 11.61 MiB p/s ETA 3s43.16 MiB / 75.21 MiB [--------------------------->____________________] 57.39% 11.61 MiB p/s ETA 2s48.20 MiB / 75.21 MiB [------------------------------>_________________] 64.08% 12.47 MiB p/s ETA 2s53.23 MiB / 75.21 MiB [--------------------------------->______________] 70.77% 12.47 MiB p/s ETA 1s58.20 MiB / 75.21 MiB [------------------------------------->__________] 77.38% 12.47 MiB p/s ETA 1s63.23 MiB / 75.21 MiB [---------------------------------------->_______] 84.07% 13.29 MiB p/s ETA 0s68.25 MiB / 75.21 MiB [------------------------------------------->____] 90.74% 13.29 MiB p/s ETA 0s73.34 MiB / 75.21 MiB [---------------------------------------------->_] 97.51% 13.29 MiB p/s ETA 0s75.21 MiB / 75.21 MiB [---------------------------------------------->] 100.00% 13.72 MiB p/s ETA 0s75.21 MiB / 75.21 MiB [---------------------------------------------->] 100.00% 13.72 MiB p/s ETA 0s75.21 MiB / 75.21 MiB [---------------------------------------------->] 100.00% 13.72 MiB p/s ETA 0s75.21 MiB / 75.21 MiB [---------------------------------------------->] 100.00% 12.83 MiB p/s ETA 0s75.21 MiB / 75.21 MiB [---------------------------------------------->] 100.00% 12.83 MiB p/s ETA 0s75.21 MiB / 75.21 MiB [---------------------------------------------->] 100.00% 12.83 MiB p/s ETA 0s75.21 MiB / 75.21 MiB [---------------------------------------------->] 100.00% 12.00 MiB p/s ETA 0s75.21 MiB / 75.21 MiB [---------------------------------------------->] 100.00% 12.00 MiB p/s ETA 0s75.21 MiB / 75.21 MiB [---------------------------------------------->] 100.00% 12.00 MiB p/s ETA 0s75.21 MiB / 75.21 MiB [-------------------------------------------------] 100.00% 14.25 MiB p/s 5.5s2025-11-18T07:49:32Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
+SCA > 2025-11-18T07:49:32Z	INFO	[vuln] Vulnerability scanning is enabled
+SCA > 2025-11-18T07:49:32Z	INFO	[secret] Secret scanning is enabled
+SCA > 2025-11-18T07:49:32Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln' to disable secret scanning
+SCA > 2025-11-18T07:49:32Z	INFO	[secret] Please see https://trivy.dev/v0.67/docs/scanner/secret#recommendation for faster secret detection
+SCA > 2025-11-18T07:49:32Z	INFO	Suppressing dependencies for development and testing. To display them, try the '--include-dev-deps' flag.
+SCA > 2025-11-18T07:49:32Z	INFO	Number of language-specific files	num=2
+SCA > 2025-11-18T07:49:32Z	INFO	[bundler] Detecting vulnerabilities...
+SCA > 2025-11-18T07:49:32Z	INFO	[yarn] Detecting vulnerabilities...
+SCA > 2025-11-18T07:49:32Z	WARN	Using severities from other vendors for some vulnerabilities. Read https://trivy.dev/v0.67/docs/scanner/vulnerability#severity-selection for details.
 SCA $ trivy fs . --format template --template "@$CI_PROJECT_DIR/reports/html.tpl" --output "$CI_PROJECT_DIR/reports/trivy-report.html" || true
-SCA > 2025-11-18T06:35:04Z	INFO	[vuln] Vulnerability scanning is enabled
-SCA > 2025-11-18T06:35:04Z	INFO	[secret] Secret scanning is enabled
-SCA > 2025-11-18T06:35:04Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln' to disable secret scanning
-SCA > 2025-11-18T06:35:04Z	INFO	[secret] Please see https://trivy.dev/v0.67/docs/scanner/secret#recommendation for faster secret detection
-SCA > 2025-11-18T06:35:05Z	INFO	Suppressing dependencies for development and testing. To display them, try the '--include-dev-deps' flag.
-SCA > 2025-11-18T06:35:05Z	INFO	Number of language-specific files	num=2
-SCA > 2025-11-18T06:35:05Z	INFO	[bundler] Detecting vulnerabilities...
-SCA > 2025-11-18T06:35:05Z	INFO	[yarn] Detecting vulnerabilities...
-SCA > 2025-11-18T06:35:05Z	WARN	Using severities from other vendors for some vulnerabilities. Read https://trivy.dev/v0.67/docs/scanner/vulnerability#severity-selection for details.
+SCA > 2025-11-18T07:49:32Z	INFO	[vuln] Vulnerability scanning is enabled
+SCA > 2025-11-18T07:49:32Z	INFO	[secret] Secret scanning is enabled
+SCA > 2025-11-18T07:49:32Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln' to disable secret scanning
+SCA > 2025-11-18T07:49:32Z	INFO	[secret] Please see https://trivy.dev/v0.67/docs/scanner/secret#recommendation for faster secret detection
+SCA > 2025-11-18T07:49:33Z	INFO	Suppressing dependencies for development and testing. To display them, try the '--include-dev-deps' flag.
+SCA > 2025-11-18T07:49:33Z	INFO	Number of language-specific files	num=2
+SCA > 2025-11-18T07:49:33Z	INFO	[bundler] Detecting vulnerabilities...
+SCA > 2025-11-18T07:49:33Z	INFO	[yarn] Detecting vulnerabilities...
+SCA > 2025-11-18T07:49:33Z	WARN	Using severities from other vendors for some vulnerabilities. Read https://trivy.dev/v0.67/docs/scanner/vulnerability#severity-selection for details.
 SCA $ echo "Exibindo resumo das vulnerabilidades encontradas..."
 SCA > Exibindo resumo das vulnerabilidades encontradas...
 SCA $ trivy fs . --severity MEDIUM,HIGH,CRITICAL --exit-code 1
-SCA > 2025-11-18T06:35:05Z	INFO	[vuln] Vulnerability scanning is enabled
-SCA > 2025-11-18T06:35:05Z	INFO	[secret] Secret scanning is enabled
-SCA > 2025-11-18T06:35:05Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln' to disable secret scanning
-SCA > 2025-11-18T06:35:05Z	INFO	[secret] Please see https://trivy.dev/v0.67/docs/scanner/secret#recommendation for faster secret detection
-SCA > 2025-11-18T06:35:06Z	INFO	Suppressing dependencies for development and testing. To display them, try the '--include-dev-deps' flag.
-SCA > 2025-11-18T06:35:06Z	INFO	Number of language-specific files	num=2
-SCA > 2025-11-18T06:35:06Z	INFO	[bundler] Detecting vulnerabilities...
-SCA > 2025-11-18T06:35:06Z	INFO	[yarn] Detecting vulnerabilities...
-SCA > 2025-11-18T06:35:06Z	WARN	Using severities from other vendors for some vulnerabilities. Read https://trivy.dev/v0.67/docs/scanner/vulnerability#severity-selection for details.
+SCA > 2025-11-18T07:49:33Z	INFO	[vuln] Vulnerability scanning is enabled
+SCA > 2025-11-18T07:49:33Z	INFO	[secret] Secret scanning is enabled
+SCA > 2025-11-18T07:49:33Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln' to disable secret scanning
+SCA > 2025-11-18T07:49:33Z	INFO	[secret] Please see https://trivy.dev/v0.67/docs/scanner/secret#recommendation for faster secret detection
+SCA > 2025-11-18T07:49:34Z	INFO	Suppressing dependencies for development and testing. To display them, try the '--include-dev-deps' flag.
+SCA > 2025-11-18T07:49:34Z	INFO	Number of language-specific files	num=2
+SCA > 2025-11-18T07:49:34Z	INFO	[bundler] Detecting vulnerabilities...
+SCA > 2025-11-18T07:49:34Z	INFO	[yarn] Detecting vulnerabilities...
+SCA > 2025-11-18T07:49:34Z	WARN	Using severities from other vendors for some vulnerabilities. Read https://trivy.dev/v0.67/docs/scanner/vulnerability#severity-selection for details.
 SCA > 
 SCA > Report Summary
 SCA > 
@@ -484,9 +484,9 @@ SCA > 1053             }
 SCA > ────────────────────────────────────────
 SCA > 
 SCA > 
-SCA finished in 30 s  WARN 1 
-SCA exported artifacts in 431 ms
-SCA copied artifacts to cwd in 52 ms
+SCA finished in 25 s  WARN 1 
+SCA exported artifacts in 281 ms
+SCA copied artifacts to cwd in 47 ms
 
  WARN  SCA  pre_script
   > 1052 [ ttps://app.powerbi.com/view?r=****************************************************************************************************YmRiNmY0NTlkNSJ9\"&g
