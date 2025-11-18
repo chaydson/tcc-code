@@ -18,10 +18,6 @@ mkdir -p "$REPORTS_DIR"
 
 echo "Garantindo permissões em $REPORTS_DIR"
 fix_reports_permissions
-if [ $? -ne 0 ]; then
-  echo "❌ Falha ao obter permissões de sudo para $REPORTS_DIR. Abortando."
-  exit 1
-fi
 
 rm -f "$REPORTS_DIR"/*_full_output.txt
 > "$SUMMARY_FILE" 
@@ -82,12 +78,17 @@ cleanup() {
   echo "🧹 EXECUTANDO LIMPEZA DE AMBIENTE..."
   echo "======================================================================="
   
-  echo "Parando containers Docker..."
-  docker compose down 
+  echo "Parando containers Docker e removendo volumes..."
+  docker compose down -v --remove-orphans
+  docker container prune -f
+  docker volume prune -f
+  docker image prune -a -f
+  docker builder prune -f
   echo ""
   echo "Limpeza de Docker concluída."
 }
 
+# --- SAST ---
 run_and_capture "SAST" \
   gitlab-ci-local --volume "/var/run/docker.sock:/var/run/docker.sock" --variable "DOCKER_HOST=unix:///var/run/docker.sock" SAST
 if [ $? -ne 0 ]; then
@@ -96,6 +97,7 @@ if [ $? -ne 0 ]; then
 fi
 fix_reports_permissions
 
+# --- SCA ---
 run_and_capture "SCA" \
   gitlab-ci-local SCA
 if [ $? -ne 0 ]; then
@@ -104,46 +106,128 @@ if [ $? -ne 0 ]; then
 fi
 fix_reports_permissions
 
-header "SETUP DAST: Subindo aplicação via Docker Compose"
-echo "Subindo aplicação com 'docker compose up -d'..."
+# --- DAST ---
+header "SETUP DAST: Limpando ambiente Docker (para evitar cache corrompido)"
+echo "Parando containers e limpando volumes (-v)..."
+docker compose down -v
+if [ $? -ne 0 ]; then
+    echo "⚠️ Aviso: Falha ao executar 'docker compose down -v'. Continuando mesmo assim..."
+fi
 
-docker compose up -d
-APP_RUN_STATUS=$?
+echo "Reconstruindo a imagem de serviço sem cache (--no-cache)..."
+docker compose build --no-cache decidim-service
+BUILD_STATUS=$?
+
+if [ $BUILD_STATUS -ne 0 ]; then
+  echo "❌ Falha crítica ao reconstruir a imagem 'decidim-service' com 'build --no-cache'."
+  echo "Impossível continuar com o DAST. Verifique os logs de build."
+  APP_RUN_STATUS=1
+else
+  APP_RUN_STATUS=0
+fi
+
+header "SETUP DAST: Subindo aplicação via Docker Compose"
+
+if [ $APP_RUN_STATUS -eq 0 ]; then
+  echo "Subindo aplicação com 'docker compose up -d'..."
+  docker compose up -d
+  APP_RUN_STATUS=$?
+else
+  echo "Pulando 'docker compose up' devido à falha no 'build'."
+fi
 
 if [ $APP_RUN_STATUS -ne 0 ]; then
-  echo "❌ Falha ao iniciar a aplicação com 'docker compose up'. Abortando DAST."
+  echo "❌ Falha ao iniciar a aplicação com 'docker compose up' (ou falha no build anterior). Abortando DAST."
+  docker compose logs decidim-service
   OVERALL_STATUS=1
 else
   echo "Aplicação iniciada. Aguardando até o servidor subir..."
   
   ATTEMPTS=0
   MAX_ATTEMPTS=100
-  while ! curl -f -s -o /dev/null http://localhost:3000; do
+  APP_IS_READY_FOR_DAST=false
+  RESTART_ATTEMPTS=0
+  MAX_RESTARTS=2
+
+  while [ $ATTEMPTS -le $MAX_ATTEMPTS ]; do
+    
+    # Tenta o curl
+    if curl -f -s -o /dev/null http://localhost:3000; then
+      echo "✅ Aplicação pronta em http://localhost:3000."
+      APP_IS_READY_FOR_DAST=true
+      break # Sucesso, sai do loop
+    fi
+
+    # Verifica o status do container 'decidim-service'
+    CONTAINER_STATUS=$(docker inspect -f '{{.State.Status}}' decidim-service 2>/dev/null || echo "not_found")
+    
+    if [ "$CONTAINER_STATUS" = "exited" ]; then
+      echo "⚠️ AVISO: O container 'decidim-service' parou (Status: $CONTAINER_STATUS) na tentativa $ATTEMPTS."
+      echo "Mostrando logs da falha:"
+      docker compose logs decidim-service
+      
+      RESTART_ATTEMPTS=$((RESTART_ATTEMPTS + 1))
+      
+      if [ $RESTART_ATTEMPTS -gt $MAX_RESTARTS ]; then
+         echo "❌ ERRO CRÍTICO: O container parou e o limite de restarts ($MAX_RESTARTS) foi atingido."
+         OVERALL_STATUS=1
+         break
+      fi
+
+      echo "🔄 Tentando reiniciar a aplicação (Restart $RESTART_ATTEMPTS/$MAX_RESTARTS)..."
+      
+      # Derruba o ambiente
+      echo "Executando 'docker compose down'..."
+      docker compose down
+      
+      # Tenta subir novamente
+      echo "Executando 'docker compose up -d'..."
+      docker compose up -d
+      RESTART_STATUS=$?
+      
+      if [ $RESTART_STATUS -ne 0 ]; then
+          echo "❌ Falha crítica ao tentar reiniciar com 'docker compose up -d' após o crash."
+          OVERALL_STATUS=1
+          break
+      fi
+      
+      echo "Reinício concluído. Aguardando estabilização antes da próxima checagem..."
+      sleep 10
+    
+    fi
+
     ATTEMPTS=$((ATTEMPTS + 1))
+    
+    # Checagem de timeout
     if [ $ATTEMPTS -gt $MAX_ATTEMPTS ]; then
       echo "❌ Timeout: Aplicação não respondeu em http://localhost:3000 após 90 segundos."
       docker compose logs
       OVERALL_STATUS=1
-      exit 1
+      break
     fi
-      echo "Aguardando... (tentativa $ATTEMPTS/$MAX_ATTEMPTS)"
-      sleep 5
+
+    echo "Aguardando... (tentativa $ATTEMPTS/$MAX_ATTEMPTS) (Status do container: $CONTAINER_STATUS)"
+    sleep 5
   done
 
-echo "✅ Aplicação pronta em http://localhost:3000. Iniciando DAST."
+  if [ "$APP_IS_READY_FOR_DAST" = true ]; then
+    echo "Iniciando DAST."
+    run_and_capture "DAST (ZAP Baseline)" \
+      sudo docker run --network="host" --rm \
+      -v $(pwd):/zap/wrk/:rw -t \
+      ghcr.io/zaproxy/zaproxy:stable \
+      zap-baseline.py \
+        -t http://localhost:3000/ \
+        -r "$REPORTS_TOOLS_DIR/zap-report.html" \
+        -J "$REPORTS_TOOLS_DIR/zap-report.json" \
+        -l WARN
 
-  run_and_capture "DAST (ZAP Baseline)" \
-    sudo docker run --network="host" --rm \
-    -v $(pwd):/zap/wrk/:rw -t \
-    ghcr.io/zaproxy/zaproxy:stable \
-    zap-baseline.py \
-      -t http://localhost:3000/ \
-      -r "$REPORTS_TOOLS_DIR/zap-report.html" \
-      -J "$REPORTS_TOOLS_DIR/zap-report.json" \
-      -l WARN
+    ZAP_STATUS=$?    
+    echo "Job 'DAST (ZAP Baseline)' (Código de Saída: $ZAP_STATUS)"
+  else
+    echo "Pulando DAST devido a falha no container ou timeout."
+  fi
 
-  ZAP_STATUS=$?    
-  echo "Job 'DAST (ZAP Baseline)' (Código de Saída: $ZAP_STATUS)"
 fi
 fix_reports_permissions
 
