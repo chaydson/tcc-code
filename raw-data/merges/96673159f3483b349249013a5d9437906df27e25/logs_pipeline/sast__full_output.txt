@@ -1,0 +1,251 @@
+parsing and downloads finished in 51 ms.
+json schema validated in 231 ms
+SAST starting docker:latest (test)
+SAST pulled docker:latest in 9.99 s
+SAST pulled docker.io/firecow/gitlab-ci-local-util:latest in 5.35 s
+SAST copied to docker volumes in 6.64 s
+SAST started service image: docker:latest with aliases: docker in 232 ms
+SAST > still running...
+SAST > still running...
+SAST > still running...
+SAST service image: docker:latest healthcheck failed
+SAST   Command failed with exit code 143: docker run --rm --name=gcl-wait-for-it-173669-0-2375 --network 49517a73eead59c5428c2bbaaeca7da063610d44cdd7bbf43287ca626e54e9f5 docker.io/sumina46/wait-for-it:latest docker:2375 -t 30
+SAST   Unable to find image 'sumina46/wait-for-it:latest' locally
+SAST   latest: Pulling from sumina46/wait-for-it
+SAST   661ff4d9561e: Pulling fs layer
+SAST   62db698644e1: Pulling fs layer
+SAST   36d06bb969ea: Pulling fs layer
+SAST   ec02e38aea4c: Pulling fs layer
+SAST   ec02e38aea4c: Waiting
+SAST   36d06bb969ea: Verifying Checksum
+SAST   36d06bb969ea: Download complete
+SAST   62db698644e1: Verifying Checksum
+SAST   62db698644e1: Download complete
+SAST   661ff4d9561e: Verifying Checksum
+SAST   661ff4d9561e: Download complete
+SAST   661ff4d9561e: Pull complete
+SAST   62db698644e1: Pull complete
+SAST   36d06bb969ea: Pull complete
+SAST   ec02e38aea4c: Download complete
+SAST   ec02e38aea4c: Pull complete
+SAST   Digest: sha256:d7f14b742f5b83c1bc03c394487c2f672ca776cdc6b3dbc0922e9f9d05e30d39
+SAST   Status: Downloaded newer image for sumina46/wait-for-it:latest
+SAST   wait-for-it.sh: waiting 30 seconds for docker:2375
+SAST   nc: bad address 'docker'
+SAST   nc: bad address 'docker'
+SAST   nc: bad address 'docker'
+SAST   nc: bad address 'docker'
+SAST   nc: bad address 'docker'
+SAST   wait-for-it.sh: timeout occurred after waiting 30 seconds for docker:2375
+SAST also see (/home/chaydson/Workspace/UnB/TCC/decidim-govbr-lappis/.gitlab-ci-local/services-output/SAST/docker:latest-0.log)
+SAST service image: docker:latest healthcheck failed
+SAST   Command failed with exit code 143: docker run --rm --name=gcl-wait-for-it-173669-0-2376 --network 49517a73eead59c5428c2bbaaeca7da063610d44cdd7bbf43287ca626e54e9f5 docker.io/sumina46/wait-for-it:latest docker:2376 -t 30
+SAST   Unable to find image 'sumina46/wait-for-it:latest' locally
+SAST   latest: Pulling from sumina46/wait-for-it
+SAST   661ff4d9561e: Pulling fs layer
+SAST   62db698644e1: Pulling fs layer
+SAST   36d06bb969ea: Pulling fs layer
+SAST   ec02e38aea4c: Pulling fs layer
+SAST   ec02e38aea4c: Waiting
+SAST   36d06bb969ea: Verifying Checksum
+SAST   36d06bb969ea: Download complete
+SAST   62db698644e1: Verifying Checksum
+SAST   62db698644e1: Download complete
+SAST   661ff4d9561e: Download complete
+SAST   661ff4d9561e: Pull complete
+SAST   62db698644e1: Pull complete
+SAST   36d06bb969ea: Pull complete
+SAST   ec02e38aea4c: Verifying Checksum
+SAST   ec02e38aea4c: Download complete
+SAST   ec02e38aea4c: Pull complete
+SAST   Digest: sha256:d7f14b742f5b83c1bc03c394487c2f672ca776cdc6b3dbc0922e9f9d05e30d39
+SAST   Status: Downloaded newer image for sumina46/wait-for-it:latest
+SAST   wait-for-it.sh: waiting 30 seconds for docker:2376
+SAST   nc: bad address 'docker'
+SAST   nc: bad address 'docker'
+SAST   nc: bad address 'docker'
+SAST   nc: bad address 'docker'
+SAST   nc: bad address 'docker'
+SAST   wait-for-it.sh: timeout occurred after waiting 30 seconds for docker:2376
+SAST also see (/home/chaydson/Workspace/UnB/TCC/decidim-govbr-lappis/.gitlab-ci-local/services-output/SAST/docker:latest-0.log)
+SAST $ echo "Criando diretório para o relatório..."
+SAST > Criando diretório para o relatório...
+SAST $ mkdir -p "$GCL_PROJECT_DIR_ON_HOST/reports"
+SAST $ echo "Verificando versões do Ruby e Rails..."
+SAST > Verificando versões do Ruby e Rails...
+SAST $ docker run --rm presidentbeef/brakeman ruby --version
+SAST > Unable to find image 'presidentbeef/brakeman:latest' locally
+SAST > latest: Pulling from presidentbeef/brakeman
+SAST > 2d35ebdb57d9: Already exists
+SAST > 25812788425e: Pulling fs layer
+SAST > 6d3ffd04d29e: Pulling fs layer
+SAST > 8afcc9db4f79: Pulling fs layer
+SAST > ef31f623adf9: Pulling fs layer
+SAST > 6b0ae2536373: Pulling fs layer
+SAST > 0595c0f7379f: Pulling fs layer
+SAST > ef31f623adf9: Waiting
+SAST > 79f3b41164c2: Pulling fs layer
+SAST > 6b0ae2536373: Waiting
+SAST > 4f6bc2d82ac6: Pulling fs layer
+SAST > fe709d6ecca7: Pulling fs layer
+SAST > 0595c0f7379f: Waiting
+SAST > 79f3b41164c2: Waiting
+SAST > 3c88698cc6a2: Pulling fs layer
+SAST > 4f6bc2d82ac6: Waiting
+SAST > fe709d6ecca7: Waiting
+SAST > 3c88698cc6a2: Waiting
+SAST > 8afcc9db4f79: Verifying Checksum
+SAST > 8afcc9db4f79: Download complete
+SAST > 25812788425e: Verifying Checksum
+SAST > 25812788425e: Download complete
+SAST > 25812788425e: Pull complete
+SAST > ef31f623adf9: Download complete
+SAST > 6d3ffd04d29e: Verifying Checksum
+SAST > 6d3ffd04d29e: Download complete
+SAST > 6d3ffd04d29e: Pull complete
+SAST > 0595c0f7379f: Verifying Checksum
+SAST > 0595c0f7379f: Download complete
+SAST > 8afcc9db4f79: Pull complete
+SAST > ef31f623adf9: Pull complete
+SAST > 79f3b41164c2: Verifying Checksum
+SAST > 79f3b41164c2: Download complete
+SAST > fe709d6ecca7: Verifying Checksum
+SAST > fe709d6ecca7: Download complete
+SAST > 6b0ae2536373: Verifying Checksum
+SAST > 6b0ae2536373: Download complete
+SAST > 3c88698cc6a2: Download complete
+SAST > 4f6bc2d82ac6: Verifying Checksum
+SAST > 4f6bc2d82ac6: Download complete
+SAST > 6b0ae2536373: Pull complete
+SAST > 0595c0f7379f: Pull complete
+SAST > 79f3b41164c2: Pull complete
+SAST > 4f6bc2d82ac6: Pull complete
+SAST > fe709d6ecca7: Pull complete
+SAST > 3c88698cc6a2: Pull complete
+SAST > Digest: sha256:19e4fe85a19844bc050cd09c23551d5ee0fb38aacf379b080ab4c42064c61d27
+SAST > Status: Downloaded newer image for presidentbeef/brakeman:latest
+SAST > brakeman 7.1.1
+SAST $ docker run --rm presidentbeef/brakeman rails --version
+SAST > brakeman 7.1.1
+SAST $ echo "Rodando Brakeman via Docker..."
+SAST > Rodando Brakeman via Docker...
+SAST $ docker run --rm -v "$GCL_PROJECT_DIR_ON_HOST":/app -w /app presidentbeef/brakeman -o /app/reports/brakeman-report.html -o /app/reports/brakeman-report.json || true
+SAST > [Notice] Using Prism parser
+SAST > Loading scanner...
+SAST > Processing application in /app
+SAST > Processing gems...                      
+SAST > [Notice] Detected Rails 6 application
+SAST > Processing configuration...             
+SAST > [Notice] Escaping HTML by default
+SAST > Finding files...                        
+SAST > Parsing files...                        
+SAST > Detecting file types...                 
+SAST > Processing initializers...              
+SAST >  0/25 files processed 1/25 files processed 2/25 files processed 3/25 files processed 4/25 files processed 5/25 files processed 6/25 files processed 7/25 files processed 8/25 files processed 9/25 files processed 10/25 files processed 11/25 files processed 12/25 files processed 13/25 files processed 14/25 files processed 15/25 files processed 16/25 files processed 17/25 files processed 18/25 files processed 19/25 files processed 20/25 files processed 21/25 files processed 22/25 files processed 23/25 files processed 24/25 files processedProcessing libs...                      
+SAST >  0/220 files processed 1/220 files processed 2/220 files processed 3/220 files processed 4/220 files processed 5/220 files processed 6/220 files processed 7/220 files processed 8/220 files processed 9/220 files processed 10/220 files processed 11/220 files processed 12/220 files processed 13/220 files processed 14/220 files processed 15/220 files processed 16/220 files processed 17/220 files processed 18/220 files processed 19/220 files processed 20/220 files processed 21/220 files processed 22/220 files processed 23/220 files processed 24/220 files processed 25/220 files processed 26/220 files processed 27/220 files processed 28/220 files processed 29/220 files processed 30/220 files processed 31/220 files processed 32/220 files processed 33/220 files processed 34/220 files processed 35/220 files processed 36/220 files processed 37/220 files processed 38/220 files processed 39/220 files processed 40/220 files processed 41/220 files processed 42/220 files processed 43/220 files processed 44/220 files processed 45/220 files processed 46/220 files processed 47/220 files processed 48/220 files processed 49/220 files processed 50/220 files processed 51/220 files processed 52/220 files processed 53/220 files processed 54/220 files processed 55/220 files processed 56/220 files processed 57/220 files processed 58/220 files processed 59/220 files processed 60/220 files processed 61/220 files processed 62/220 files processed 63/220 files processed 64/220 files processed 65/220 files processed 66/220 files processed 67/220 files processed 68/220 files processed 69/220 files processed 70/220 files processed 71/220 files processed 72/220 files processed 73/220 files processed 74/220 files processed 75/220 files processed 76/220 files processed 77/220 files processed 78/220 files processed 79/220 files processed 80/220 files processed 81/220 files processed 82/220 files processed 83/220 files processed 84/220 files processed 85/220 files processed 86/220 files processed 87/220 files processed 88/220 files processed 89/220 files processed 90/220 files processed 91/220 files processed 92/220 files processed 93/220 files processed 94/220 files processed 95/220 files processed 96/220 files processed 97/220 files processed 98/220 files processed 99/220 files processed 100/220 files processed 101/220 files processed 102/220 files processed 103/220 files processed 104/220 files processed 105/220 files processed 106/220 files processed 107/220 files processed 108/220 files processed 109/220 files processed 110/220 files processed 111/220 files processed 112/220 files processed 113/220 files processed 114/220 files processed 115/220 files processed 116/220 files processed 117/220 files processed 118/220 files processed 119/220 files processed 120/220 files processed 121/220 files processed 122/220 files processed 123/220 files processed 124/220 files processed 125/220 files processed 126/220 files processed 127/220 files processed 128/220 files processed 129/220 files processed 130/220 files processed 131/220 files processed 132/220 files processed 133/220 files processed 134/220 files processed 135/220 files processed 136/220 files processed 137/220 files processed 138/220 files processed 139/220 files processed 140/220 files processed 141/220 files processed 142/220 files processed 143/220 files processed 144/220 files processed 145/220 files processed 146/220 files processed 147/220 files processed 148/220 files processed 149/220 files processed 150/220 files processed 151/220 files processed 152/220 files processed 153/220 files processed 154/220 files processed 155/220 files processed 156/220 files processed 157/220 files processed 158/220 files processed 159/220 files processed 160/220 files processed 161/220 files processed 162/220 files processed 163/220 files processed 164/220 files processed 165/220 files processed 166/220 files processed 167/220 files processed 168/220 files processed 169/220 files processed 170/220 files processed 171/220 files processed 172/220 files processed 173/220 files processed 174/220 files processed 175/220 files processed 176/220 files processed 177/220 files processed 178/220 files processed 179/220 files processed 180/220 files processed 181/220 files processed 182/220 files processed 183/220 files processed 184/220 files processed 185/220 files processed 186/220 files processed 187/220 files processed 188/220 files processed 189/220 files processed 190/220 files processed 191/220 files processed 192/220 files processed 193/220 files processed 194/220 files processed 195/220 files processed 196/220 files processed 197/220 files processed 198/220 files processed 199/220 files processed 200/220 files processed 201/220 files processed 202/220 files processed 203/220 files processed 204/220 files processed 205/220 files processed 206/220 files processed 207/220 files processed 208/220 files processed 209/220 files processed 210/220 files processed 211/220 files processed 212/220 files processed 213/220 files processed 214/220 files processed 215/220 files processed 216/220 files processed 217/220 files processed 218/220 files processed 219/220 files processedProcessing routes...                    
+SAST > Processing templates...                 
+SAST >  0/327 templates processed 1/327 templates processed 2/327 templates processed 3/327 templates processed 4/327 templates processed 5/327 templates processed 6/327 templates processed 7/327 templates processed 8/327 templates processed 9/327 templates processed 10/327 templates processed 11/327 templates processed 12/327 templates processed 13/327 templates processed 14/327 templates processed 15/327 templates processed 16/327 templates processed 17/327 templates processed 18/327 templates processed 19/327 templates processed 20/327 templates processed 21/327 templates processed 22/327 templates processed 23/327 templates processed 24/327 templates processed 25/327 templates processed 26/327 templates processed 27/327 templates processed 28/327 templates processed 29/327 templates processed 30/327 templates processed 31/327 templates processed 32/327 templates processed 33/327 templates processed 34/327 templates processed 35/327 templates processed 36/327 templates processed 37/327 templates processed 38/327 templates processed 39/327 templates processed 40/327 templates processed 41/327 templates processed 42/327 templates processed 43/327 templates processed 44/327 templates processed 45/327 templates processed 46/327 templates processed 47/327 templates processed 48/327 templates processed 49/327 templates processed 50/327 templates processed 51/327 templates processed 52/327 templates processed 53/327 templates processed 54/327 templates processed 55/327 templates processed 56/327 templates processed 57/327 templates processed 58/327 templates processed 59/327 templates processed 60/327 templates processed 61/327 templates processed 62/327 templates processed 63/327 templates processed 64/327 templates processed 65/327 templates processed 66/327 templates processed 67/327 templates processed 68/327 templates processed 69/327 templates processed 70/327 templates processed 71/327 templates processed 72/327 templates processed 73/327 templates processed 74/327 templates processed 75/327 templates processed 76/327 templates processed 77/327 templates processed 78/327 templates processed 79/327 templates processed 80/327 templates processed 81/327 templates processed 82/327 templates processed 83/327 templates processed 84/327 templates processed 85/327 templates processed 86/327 templates processed 87/327 templates processed 88/327 templates processed 89/327 templates processed 90/327 templates processed 91/327 templates processed 92/327 templates processed 93/327 templates processed 94/327 templates processed 95/327 templates processed 96/327 templates processed 97/327 templates processed 98/327 templates processed 99/327 templates processed 100/327 templates processed 101/327 templates processed 102/327 templates processed 103/327 templates processed 104/327 templates processed 105/327 templates processed 106/327 templates processed 107/327 templates processed 108/327 templates processed 109/327 templates processed 110/327 templates processed 111/327 templates processed 112/327 templates processed 113/327 templates processed 114/327 templates processed 115/327 templates processed 116/327 templates processed 117/327 templates processed 118/327 templates processed 119/327 templates processed 120/327 templates processed 121/327 templates processed 122/327 templates processed 123/327 templates processed 124/327 templates processed 125/327 templates processed 126/327 templates processed 127/327 templates processed 128/327 templates processed 129/327 templates processed 130/327 templates processed 131/327 templates processed 132/327 templates processed 133/327 templates processed 134/327 templates processed 135/327 templates processed 136/327 templates processed 137/327 templates processed 138/327 templates processed 139/327 templates processed 140/327 templates processed 141/327 templates processed 142/327 templates processed 143/327 templates processed 144/327 templates processed 145/327 templates processed 146/327 templates processed 147/327 templates processed 148/327 templates processed 149/327 templates processed 150/327 templates processed 151/327 templates processed 152/327 templates processed 153/327 templates processed 154/327 templates processed 155/327 templates processed 156/327 templates processed 157/327 templates processed 158/327 templates processed 159/327 templates processed 160/327 templates processed 161/327 templates processed 162/327 templates processed 163/327 templates processed 164/327 templates processed 165/327 templates processed 166/327 templates processed 167/327 templates processed 168/327 templates processed 169/327 templates processed 170/327 templates processed 171/327 templates processed 172/327 templates processed 173/327 templates processed 174/327 templates processed 175/327 templates processed 176/327 templates processed 177/327 templates processed 178/327 templates processed 179/327 templates processed 180/327 templates processed 181/327 templates processed 182/327 templates processed 183/327 templates processed 184/327 templates processed 185/327 templates processed 186/327 templates processed 187/327 templates processed 188/327 templates processed 189/327 templates processed 190/327 templates processed 191/327 templates processed 192/327 templates processed 193/327 templates processed 194/327 templates processed 195/327 templates processed 196/327 templates processed 197/327 templates processed 198/327 templates processed 199/327 templates processed 200/327 templates processed 201/327 templates processed 202/327 templates processed 203/327 templates processed 204/327 templates processed 205/327 templates processed 206/327 templates processed 207/327 templates processed 208/327 templates processed 209/327 templates processed 210/327 templates processed 211/327 templates processed 212/327 templates processed 213/327 templates processed 214/327 templates processed 215/327 templates processed 216/327 templates processed 217/327 templates processed 218/327 templates processed 219/327 templates processed 220/327 templates processed 221/327 templates processed 222/327 templates processed 223/327 templates processed 224/327 templates processed 225/327 templates processed 226/327 templates processed 227/327 templates processed 228/327 templates processed 229/327 templates processed 230/327 templates processed 231/327 templates processed 232/327 templates processed 233/327 templates processed 234/327 templates processed 235/327 templates processed 236/327 templates processed 237/327 templates processed 238/327 templates processed 239/327 templates processed 240/327 templates processed 241/327 templates processed 242/327 templates processed 243/327 templates processed 244/327 templates processed 245/327 templates processed 246/327 templates processed 247/327 templates processed 248/327 templates processed 249/327 templates processed 250/327 templates processed 251/327 templates processed 252/327 templates processed 253/327 templates processed 254/327 templates processed 255/327 templates processed 256/327 templates processed 257/327 templates processed 258/327 templates processed 259/327 templates processed 260/327 templates processed 261/327 templates processed 262/327 templates processed 263/327 templates processed 264/327 templates processed 265/327 templates processed 266/327 templates processed 267/327 templates processed 268/327 templates processed 269/327 templates processed 270/327 templates processed 271/327 templates processed 272/327 templates processed 273/327 templates processed 274/327 templates processed 275/327 templates processed 276/327 templates processed 277/327 templates processed 278/327 templates processed 279/327 templates processed 280/327 templates processed 281/327 templates processed 282/327 templates processed 283/327 templates processed 284/327 templates processed 285/327 templates processed 286/327 templates processed 287/327 templates processed 288/327 templates processed 289/327 templates processed 290/327 templates processed 291/327 templates processed 292/327 templates processed 293/327 templates processed 294/327 templates processed 295/327 templates processed 296/327 templates processed 297/327 templates processed 298/327 templates processed 299/327 templates processed 300/327 templates processed 301/327 templates processed 302/327 templates processed 303/327 templates processed 304/327 templates processed 305/327 templates processed 306/327 templates processed 307/327 templates processed 308/327 templates processed 309/327 templates processed 310/327 templates processed 311/327 templates processed 312/327 templates processed 313/327 templates processed 314/327 templates processed 315/327 templates processed 316/327 templates processed 317/327 templates processed 318/327 templates processed 319/327 templates processed 320/327 templates processed 321/327 templates processed 322/327 templates processed 323/327 templates processed 324/327 templates processed 325/327 templates processed 326/327 templates processedProcessing data flow in templates...    
+SAST >  0/324 templates processed 1/324 templates processed 2/324 templates processed 3/324 templates processed 4/324 templates processed 5/324 templates processed 6/324 templates processed 7/324 templates processed 8/324 templates processed 9/324 templates processed 10/324 templates processed 11/324 templates processed 12/324 templates processed 13/324 templates processed 14/324 templates processed 15/324 templates processed 16/324 templates processed 17/324 templates processed 18/324 templates processed 19/324 templates processed 20/324 templates processed 21/324 templates processed 22/324 templates processed 23/324 templates processed 24/324 templates processed 25/324 templates processed 26/324 templates processed 27/324 templates processed 28/324 templates processed 29/324 templates processed 30/324 templates processed 31/324 templates processed 32/324 templates processed 33/324 templates processed 34/324 templates processed 35/324 templates processed 36/324 templates processed 37/324 templates processed 38/324 templates processed 39/324 templates processed 40/324 templates processed 41/324 templates processed 42/324 templates processed 43/324 templates processed 44/324 templates processed 45/324 templates processed 46/324 templates processed 47/324 templates processed 48/324 templates processed 49/324 templates processed 50/324 templates processed 51/324 templates processed 52/324 templates processed 53/324 templates processed 54/324 templates processed 55/324 templates processed 56/324 templates processed 57/324 templates processed 58/324 templates processed 59/324 templates processed 60/324 templates processed 61/324 templates processed 62/324 templates processed 63/324 templates processed 64/324 templates processed 65/324 templates processed 66/324 templates processed 67/324 templates processed 68/324 templates processed 69/324 templates processed 70/324 templates processed 71/324 templates processed 72/324 templates processed 73/324 templates processed 74/324 templates processed 75/324 templates processed 76/324 templates processed 77/324 templates processed 78/324 templates processed 79/324 templates processed 80/324 templates processed 81/324 templates processed 82/324 templates processed 83/324 templates processed 84/324 templates processed 85/324 templates processed 86/324 templates processed 87/324 templates processed 88/324 templates processed 89/324 templates processed 90/324 templates processed 91/324 templates processed 92/324 templates processed 93/324 templates processed 94/324 templates processed 95/324 templates processed 96/324 templates processed 97/324 templates processed 98/324 templates processed 99/324 templates processed 100/324 templates processed 101/324 templates processed 102/324 templates processed 103/324 templates processed 104/324 templates processed 105/324 templates processed 106/324 templates processed 107/324 templates processed 108/324 templates processed 109/324 templates processed 110/324 templates processed 111/324 templates processed 112/324 templates processed 113/324 templates processed 114/324 templates processed 115/324 templates processed 116/324 templates processed 117/324 templates processed 118/324 templates processed 119/324 templates processed 120/324 templates processed 121/324 templates processed 122/324 templates processed 123/324 templates processed 124/324 templates processed 125/324 templates processed 126/324 templates processed 127/324 templates processed 128/324 templates processed 129/324 templates processed 130/324 templates processed 131/324 templates processed 132/324 templates processed 133/324 templates processed 134/324 templates processed 135/324 templates processed 136/324 templates processed 137/324 templates processed 138/324 templates processed 139/324 templates processed 140/324 templates processed 141/324 templates processed 142/324 templates processed 143/324 templates processed 144/324 templates processed 145/324 templates processed 146/324 templates processed 147/324 templates processed 148/324 templates processed 149/324 templates processed 150/324 templates processed 151/324 templates processed 152/324 templates processed 153/324 templates processed 154/324 templates processed 155/324 templates processed 156/324 templates processed 157/324 templates processed 158/324 templates processed 159/324 templates processed 160/324 templates processed 161/324 templates processed 162/324 templates processed 163/324 templates processed 164/324 templates processed 165/324 templates processed 166/324 templates processed 167/324 templates processed 168/324 templates processed 169/324 templates processed 170/324 templates processed 171/324 templates processed 172/324 templates processed 173/324 templates processed 174/324 templates processed 175/324 templates processed 176/324 templates processed 177/324 templates processed 178/324 templates processed 179/324 templates processed 180/324 templates processed 181/324 templates processed 182/324 templates processed 183/324 templates processed 184/324 templates processed 185/324 templates processed 186/324 templates processed 187/324 templates processed 188/324 templates processed 189/324 templates processed 190/324 templates processed 191/324 templates processed 192/324 templates processed 193/324 templates processed 194/324 templates processed 195/324 templates processed 196/324 templates processed 197/324 templates processed 198/324 templates processed 199/324 templates processed 200/324 templates processed 201/324 templates processed 202/324 templates processed 203/324 templates processed 204/324 templates processed 205/324 templates processed 206/324 templates processed 207/324 templates processed 208/324 templates processed 209/324 templates processed 210/324 templates processed 211/324 templates processed 212/324 templates processed 213/324 templates processed 214/324 templates processed 215/324 templates processed 216/324 templates processed 217/324 templates processed 218/324 templates processed 219/324 templates processed 220/324 templates processed 221/324 templates processed 222/324 templates processed 223/324 templates processed 224/324 templates processed 225/324 templates processed 226/324 templates processed 227/324 templates processed 228/324 templates processed 229/324 templates processed 230/324 templates processed 231/324 templates processed 232/324 templates processed 233/324 templates processed 234/324 templates processed 235/324 templates processed 236/324 templates processed 237/324 templates processed 238/324 templates processed 239/324 templates processed 240/324 templates processed 241/324 templates processed 242/324 templates processed 243/324 templates processed 244/324 templates processed 245/324 templates processed 246/324 templates processed 247/324 templates processed 248/324 templates processed 249/324 templates processed 250/324 templates processed 251/324 templates processed 252/324 templates processed 253/324 templates processed 254/324 templates processed 255/324 templates processed 256/324 templates processed 257/324 templates processed 258/324 templates processed 259/324 templates processed 260/324 templates processed 261/324 templates processed 262/324 templates processed 263/324 templates processed 264/324 templates processed 265/324 templates processed 266/324 templates processed 267/324 templates processed 268/324 templates processed 269/324 templates processed 270/324 templates processed 271/324 templates processed 272/324 templates processed 273/324 templates processed 274/324 templates processed 275/324 templates processed 276/324 templates processed 277/324 templates processed 278/324 templates processed 279/324 templates processed 280/324 templates processed 281/324 templates processed 282/324 templates processed 283/324 templates processed 284/324 templates processed 285/324 templates processed 286/324 templates processed 287/324 templates processed 288/324 templates processed 289/324 templates processed 290/324 templates processed 291/324 templates processed 292/324 templates processed 293/324 templates processed 294/324 templates processed 295/324 templates processed 296/324 templates processed 297/324 templates processed 298/324 templates processed 299/324 templates processed 300/324 templates processed 301/324 templates processed 302/324 templates processed 303/324 templates processed 304/324 templates processed 305/324 templates processed 306/324 templates processed 307/324 templates processed 308/324 templates processed 309/324 templates processed 310/324 templates processed 311/324 templates processed 312/324 templates processed 313/324 templates processed 314/324 templates processed 315/324 templates processed 316/324 templates processed 317/324 templates processed 318/324 templates processed 319/324 templates processed 320/324 templates processed 321/324 templates processed 322/324 templates processed 323/324 templates processedProcessing models...                    
+SAST >  0/29 files processed 1/29 files processed 2/29 files processed 3/29 files processed 4/29 files processed 5/29 files processed 6/29 files processed 7/29 files processed 8/29 files processed 9/29 files processed 10/29 files processed 11/29 files processed 12/29 files processed 13/29 files processed 14/29 files processed 15/29 files processed 16/29 files processed 17/29 files processed 18/29 files processed 19/29 files processed 20/29 files processed 21/29 files processed 22/29 files processed 23/29 files processed 24/29 files processed 25/29 files processed 26/29 files processed 27/29 files processed 28/29 files processedProcessing controllers...               
+SAST >  0/59 files processed 1/59 files processed 2/59 files processed 3/59 files processed 4/59 files processed 5/59 files processed 6/59 files processed 7/59 files processed 8/59 files processed 9/59 files processed 10/59 files processed 11/59 files processed 12/59 files processed 13/59 files processed 14/59 files processed 15/59 files processed 16/59 files processed 17/59 files processed 18/59 files processed 19/59 files processed 20/59 files processed 21/59 files processed 22/59 files processed 23/59 files processed 24/59 files processed 25/59 files processed 26/59 files processed 27/59 files processed 28/59 files processed 29/59 files processed 30/59 files processed 31/59 files processed 32/59 files processed 33/59 files processed 34/59 files processed 35/59 files processed 36/59 files processed 37/59 files processed 38/59 files processed 39/59 files processed 40/59 files processed 41/59 files processed 42/59 files processed 43/59 files processed 44/59 files processed 45/59 files processed 46/59 files processed 47/59 files processed 48/59 files processed 49/59 files processed 50/59 files processed 51/59 files processed 52/59 files processed 53/59 files processed 54/59 files processed 55/59 files processed 56/59 files processed 57/59 files processed 58/59 files processedProcessing data flow in controllers...  
+SAST >  0/47 controllers processed 1/47 controllers processed 2/47 controllers processed 3/47 controllers processed 4/47 controllers processed 5/47 controllers processed 6/47 controllers processed 7/47 controllers processed 8/47 controllers processed 9/47 controllers processed 10/47 controllers processed 11/47 controllers processed 12/47 controllers processed 13/47 controllers processed 14/47 controllers processed 15/47 controllers processed 16/47 controllers processed 17/47 controllers processed 18/47 controllers processed 19/47 controllers processed 20/47 controllers processed 21/47 controllers processed 22/47 controllers processed 23/47 controllers processed 24/47 controllers processed 25/47 controllers processed 26/47 controllers processed 27/47 controllers processed 28/47 controllers processed 29/47 controllers processed 30/47 controllers processed 31/47 controllers processed 32/47 controllers processed 33/47 controllers processed 34/47 controllers processed 35/47 controllers processed 36/47 controllers processed 37/47 controllers processed 38/47 controllers processed 39/47 controllers processed 40/47 controllers processed 41/47 controllers processed 42/47 controllers processed 43/47 controllers processed 44/47 controllers processed 45/47 controllers processed 46/47 controllers processedIndexing call sites...                  
+SAST > Running checks in parallel...
+SAST >  - CheckBasicAuth
+SAST >  - CheckBasicAuthTimingAttack
+SAST >  - CheckCrossSiteScripting
+SAST >  - CheckContentTag
+SAST >  - CheckCookieSerialization
+SAST >  - CheckCreateWith
+SAST >  - CheckCSRFTokenForgeryCVE
+SAST >  - CheckDefaultRoutes
+SAST >  - CheckDeserialize
+SAST >  - CheckDetailedExceptions
+SAST >  - CheckDigestDoS
+SAST >  - CheckDynamicFinders
+SAST >  - CheckEOLRails
+SAST >  - CheckEOLRuby
+SAST >  - CheckEscapeFunction
+SAST >  - CheckEvaluation
+SAST >  - CheckExecute
+SAST >  - CheckFileAccess
+SAST >  - CheckFileDisclosure
+SAST >  - CheckFilterSkipping
+SAST >  - CheckForgerySetting
+SAST >  - CheckHeaderDoS
+SAST >  - CheckI18nXSS
+SAST >  - CheckJRubyXML
+SAST >  - CheckJSONEncoding
+SAST >  - CheckJSONEntityEscape
+SAST >  - CheckJSONParsing
+SAST >  - CheckLinkTo
+SAST >  - CheckLinkToHref
+SAST >  - CheckMailTo
+SAST >  - CheckMassAssignment
+SAST >  - CheckMimeTypeDoS
+SAST >  - CheckModelAttrAccessible
+SAST >  - CheckModelAttributes
+SAST >  - CheckModelSerialize
+SAST >  - CheckNestedAttributes
+SAST >  - CheckNestedAttributesBypass
+SAST >  - CheckNumberToCurrency
+SAST >  - CheckPageCachingCVE
+SAST >  - CheckPathname
+SAST >  - CheckPermitAttributes
+SAST >  - CheckQuoteTableName
+SAST >  - CheckRansack
+SAST >  - CheckRedirect
+SAST >  - CheckRegexDoS
+SAST >  - CheckRender
+SAST >  - CheckRenderDoS
+SAST >  - CheckRenderInline
+SAST >  - CheckResponseSplitting
+SAST >  - CheckRouteDoS
+SAST >  - CheckSafeBufferManipulation
+SAST >  - CheckSanitizeConfigCve
+SAST >  - CheckSanitizeMethods
+SAST >  - CheckSelectTag
+SAST >  - CheckSelectVulnerability
+SAST >  - CheckSend
+SAST >  - CheckSendFile
+SAST >  - CheckSessionManipulation
+SAST >  - CheckSessionSettings
+SAST >  - CheckSimpleFormat
+SAST >  - CheckSingleQuotes
+SAST >  - CheckSkipBeforeFilter
+SAST >  - CheckSprocketsPathTraversal
+SAST >  - CheckSQL
+SAST >  - CheckSQLCVEs
+SAST >  - CheckSSLVerify
+SAST >  - CheckStripTags
+SAST >  - CheckSymbolDoSCVE
+SAST >  - CheckTemplateInjection
+SAST >  - CheckTranslateBug
+SAST >  - CheckUnsafeReflection
+SAST >  - CheckUnsafeReflectionMethods
+SAST >  - CheckValidationRegex
+SAST >  - CheckVerbConfusion
+SAST >  - CheckWeakRSAKey
+SAST >  - CheckWithoutProtection
+SAST >  - CheckXMLDoS
+SAST >  - CheckYAMLParsing
+SAST > [Notice] Brakeman::CheckSessionSettings: Unable to parse `/app/config/secrets.yml`
+SAST > Checks finished, collecting results...
+SAST > Generating report...
+SAST > Report saved in '/app/reports/brakeman-report.html'
+SAST > Report saved in '/app/reports/brakeman-report.json'
+SAST $ echo "Verificando se o relatório foi gerado..."
+SAST > Verificando se o relatório foi gerado...
+SAST $ ls -l "$GCL_PROJECT_DIR_ON_HOST/reports"
+SAST > total 0
+SAST $ echo "Exibindo o conteúdo do relatório HTML gerado..."
+SAST > Exibindo o conteúdo do relatório HTML gerado...
+SAST $ cat "$GCL_PROJECT_DIR_ON_HOST/reports/brakeman-report.html"
+SAST > cat: can't open '/home/chaydson/Workspace/UnB/TCC/decidim-govbr-lappis/reports/brakeman-report.html': No such file or directory
+SAST finished in 1.12 min  WARN 1 
+SAST !! no artifacts was copied !!
+SAST copied artifacts to cwd in 46 ms
+
+ WARN  SAST  pre_script
+  > Exibindo o conteúdo do relatório HTML gerado...
+  > $ cat "$GCL_PROJECT_DIR_ON_HOST/reports/brakeman-report.html"
+  > cat: can't open '/home/chaydson/Workspace/UnB/TCC/decidim-govbr-lappis/reports/brakeman-report.html': No such file or directory

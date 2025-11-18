@@ -1,0 +1,160 @@
+Unable to find image 'ghcr.io/zaproxy/zaproxy:stable' locally
+stable: Pulling from zaproxy/zaproxy
+1adabd6b0d6b: Pulling fs layer
+a571cbd471ca: Pulling fs layer
+857812bf351c: Pulling fs layer
+1e286bb9016e: Pulling fs layer
+0d3aba03a77a: Pulling fs layer
+9c4d11bb0d37: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+76cf33c29fd6: Pulling fs layer
+1e286bb9016e: Waiting
+a61e810310a4: Pulling fs layer
+0d3aba03a77a: Waiting
+42ad5f4e4aa0: Pulling fs layer
+4f4fb700ef54: Waiting
+9c4d11bb0d37: Waiting
+879fd0f68525: Pulling fs layer
+7e373f76dd57: Pulling fs layer
+76cf33c29fd6: Waiting
+a61e810310a4: Waiting
+761b720de268: Pulling fs layer
+879fd0f68525: Waiting
+7e373f76dd57: Waiting
+7bd7ace93c3c: Pulling fs layer
+a5896ecb465b: Pulling fs layer
+b2da277bc873: Pulling fs layer
+761b720de268: Waiting
+f7b0aad99328: Pulling fs layer
+7bd7ace93c3c: Waiting
+a2a65aa1f632: Pulling fs layer
+a5896ecb465b: Waiting
+d3010de6fbf9: Pulling fs layer
+b2da277bc873: Waiting
+f68875c5401a: Pulling fs layer
+f7b0aad99328: Waiting
+a2a65aa1f632: Waiting
+d3010de6fbf9: Waiting
+f68875c5401a: Waiting
+1adabd6b0d6b: Download complete
+1e286bb9016e: Verifying Checksum
+1e286bb9016e: Download complete
+1adabd6b0d6b: Pull complete
+0d3aba03a77a: Verifying Checksum
+0d3aba03a77a: Download complete
+9c4d11bb0d37: Verifying Checksum
+9c4d11bb0d37: Download complete
+4f4fb700ef54: Verifying Checksum
+4f4fb700ef54: Download complete
+76cf33c29fd6: Verifying Checksum
+76cf33c29fd6: Download complete
+857812bf351c: Verifying Checksum
+857812bf351c: Download complete
+42ad5f4e4aa0: Verifying Checksum
+42ad5f4e4aa0: Download complete
+879fd0f68525: Download complete
+7e373f76dd57: Verifying Checksum
+7e373f76dd57: Download complete
+761b720de268: Verifying Checksum
+761b720de268: Download complete
+7bd7ace93c3c: Verifying Checksum
+7bd7ace93c3c: Download complete
+a5896ecb465b: Verifying Checksum
+a5896ecb465b: Download complete
+b2da277bc873: Verifying Checksum
+b2da277bc873: Download complete
+f7b0aad99328: Verifying Checksum
+f7b0aad99328: Download complete
+a2a65aa1f632: Verifying Checksum
+a2a65aa1f632: Download complete
+d3010de6fbf9: Verifying Checksum
+d3010de6fbf9: Download complete
+f68875c5401a: Verifying Checksum
+f68875c5401a: Download complete
+a61e810310a4: Verifying Checksum
+a61e810310a4: Download complete
+a571cbd471ca: Verifying Checksum
+a571cbd471ca: Download complete
+a571cbd471ca: Pull complete
+857812bf351c: Pull complete
+1e286bb9016e: Pull complete
+0d3aba03a77a: Pull complete
+9c4d11bb0d37: Pull complete
+4f4fb700ef54: Pull complete
+76cf33c29fd6: Pull complete
+a61e810310a4: Pull complete
+42ad5f4e4aa0: Pull complete
+879fd0f68525: Pull complete
+7e373f76dd57: Pull complete
+761b720de268: Pull complete
+7bd7ace93c3c: Pull complete
+a5896ecb465b: Pull complete
+b2da277bc873: Pull complete
+f7b0aad99328: Pull complete
+a2a65aa1f632: Pull complete
+d3010de6fbf9: Pull complete
+f68875c5401a: Pull complete
+Digest: sha256:84d2459dc305354fc2bcefc1e4d29a6bad830746891ee59c14f7cfbe136ce4ff
+Status: Downloaded newer image for ghcr.io/zaproxy/zaproxy:stable
+Total of 364 URLs
+WARN-NEW: Cross-Domain JavaScript Source File Inclusion [10017] x 5 
+	http://localhost:3000/ (200 OK)
+	http://localhost:3000/search (200 OK)
+	http://localhost:3000/meetings/ (200 OK)
+	http://localhost:3000/users/sign_in (200 OK)
+	http://localhost:3000/404 (404 Not Found)
+WARN-NEW: X-Content-Type-Options Header Missing [10021] x 10 
+	http://localhost:3000/robots.txt (200 OK)
+	http://localhost:3000/sitemap.xml (200 OK)
+	http://localhost:3000/decidim-packs/app_packs_src_decidim_direct_uploads_upload_field_js-usr_local_bundle_gems_decidim-core-0_27_-c9ca45-dae547928fecbe6de4aa.js (200 OK)
+	http://localhost:3000/decidim-packs/usr_local_bundle_gems_decidim-core-0_27_2_app_packs_src_decidim_editor_clipboard_override_js--d4d9fa-dae547928fecbe6de4aa.js (200 OK)
+	http://localhost:3000/decidim-packs/decidim_api_graphiql-dae547928fecbe6de4aa.js (200 OK)
+WARN-NEW: Server Leaks Information via "X-Powered-By" HTTP Response Header Field(s) [10037] x 8 
+	http://localhost:3000/decidim-packs/app_packs_src_decidim_direct_uploads_upload_field_js-usr_local_bundle_gems_decidim-core-0_27_-c9ca45-dae547928fecbe6de4aa.js (200 OK)
+	http://localhost:3000/decidim-packs/usr_local_bundle_gems_decidim-core-0_27_2_app_packs_src_decidim_editor_clipboard_override_js--d4d9fa-dae547928fecbe6de4aa.js (200 OK)
+	http://localhost:3000/decidim-packs/decidim_api_graphiql-dae547928fecbe6de4aa.js (200 OK)
+	http://localhost:3000/decidim-packs/vendors-node_modules_quill_formats_code_js-dae547928fecbe6de4aa.js (200 OK)
+	http://localhost:3000/decidim-packs/vendors-node_modules_webpack-dev-server_client_index_js_protocol_ws_3A_hostname_localhost_por-db74fa-dae547928fecbe6de4aa.js (200 OK)
+WARN-NEW: Content Security Policy (CSP) Header Not Set [10038] x 11 
+	http://localhost:3000/ (200 OK)
+	http://localhost:3000/rails/ (404 Not Found)
+	http://localhost:3000/assets/ (404 Not Found)
+	http://localhost:3000/*.txt$ (404 Not Found)
+	http://localhost:3000/proposals/ (404 Not Found)
+WARN-NEW: Permissions Policy Header Not Set [10063] x 11 
+	http://localhost:3000/ (200 OK)
+	http://localhost:3000/rails/ (404 Not Found)
+	http://localhost:3000/*.txt$ (404 Not Found)
+	http://localhost:3000/assets/ (404 Not Found)
+	http://localhost:3000/*.css$ (404 Not Found)
+WARN-NEW: Timestamp Disclosure - Unix [10096] x 18 
+	http://localhost:3000/decidim-packs/vendors-node_modules_rails_activestorage_app_assets_javascripts_activestorage_js-node_modules-be4d20-dae547928fecbe6de4aa.js (200 OK)
+	http://localhost:3000/decidim-packs/vendors-node_modules_rails_activestorage_app_assets_javascripts_activestorage_js-node_modules-be4d20-dae547928fecbe6de4aa.js (200 OK)
+	http://localhost:3000/decidim-packs/vendors-node_modules_rails_activestorage_app_assets_javascripts_activestorage_js-node_modules-be4d20-dae547928fecbe6de4aa.js (200 OK)
+	http://localhost:3000/decidim-packs/vendors-node_modules_rails_activestorage_app_assets_javascripts_activestorage_js-node_modules-be4d20-dae547928fecbe6de4aa.js (200 OK)
+	http://localhost:3000/decidim-packs/vendors-node_modules_rails_activestorage_app_assets_javascripts_activestorage_js-node_modules-be4d20-dae547928fecbe6de4aa.js (200 OK)
+WARN-NEW: Cross-Domain Misconfiguration [10098] x 8 
+	http://localhost:3000/decidim-packs/vendors-node_modules_webpack-dev-server_client_index_js_protocol_ws_3A_hostname_localhost_por-db74fa-dae547928fecbe6de4aa.js (200 OK)
+	http://localhost:3000/decidim-packs/vendors-node_modules_quill_formats_code_js-dae547928fecbe6de4aa.js (200 OK)
+	http://localhost:3000/decidim-packs/app_packs_src_decidim_direct_uploads_upload_field_js-usr_local_bundle_gems_decidim-core-0_27_-c9ca45-dae547928fecbe6de4aa.js (200 OK)
+	http://localhost:3000/decidim-packs/usr_local_bundle_gems_decidim-core-0_27_2_app_packs_src_decidim_editor_clipboard_override_js--d4d9fa-dae547928fecbe6de4aa.js (200 OK)
+	http://localhost:3000/decidim-packs/decidim_api_graphiql-dae547928fecbe6de4aa.js (200 OK)
+WARN-NEW: Private IP Disclosure [2] x 14 
+	http://localhost:3000/rails/ (404 Not Found)
+	http://localhost:3000/assets/ (404 Not Found)
+	http://localhost:3000/*.txt$ (404 Not Found)
+	http://localhost:3000/*.css$ (404 Not Found)
+	http://localhost:3000/proposals/ (404 Not Found)
+WARN-NEW: Sub Resource Integrity Attribute Missing [90003] x 6 
+	http://localhost:3000/ (200 OK)
+	http://localhost:3000/ (200 OK)
+	http://localhost:3000/ (200 OK)
+	http://localhost:3000/ (200 OK)
+	http://localhost:3000/ (200 OK)
+WARN-NEW: Insufficient Site Isolation Against Spectre Vulnerability [90004] x 10 
+	http://localhost:3000/ (200 OK)
+	http://localhost:3000/ (200 OK)
+	http://localhost:3000/ (200 OK)
+	http://localhost:3000/robots.txt (200 OK)
+	http://localhost:3000/sitemap.xml (200 OK)
+FAIL-NEW: 0	FAIL-INPROG: 0	WARN-NEW: 10	WARN-INPROG: 0	INFO: 0	IGNORE: 0	PASS: 56
