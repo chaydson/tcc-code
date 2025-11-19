@@ -24,7 +24,7 @@ echo "Repositório: $REPO_DIR"
 echo "Relatórios mestres serão salvos em: $MASTER_REPORTS_DIR"
 
 # Obter Lista de Commits
-echo "Buscando commits de merge dos últimos 86 dias em '$BRANCH_NAME'..."
+echo "Buscando commits de merge dos últimos 84 dias em '$BRANCH_NAME'..."
 
 # Entra no diretório do repo para rodar comandos git
 cd "$REPO_DIR"
@@ -33,10 +33,10 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-COMMITS=$(git log "$BRANCH_NAME" --merges --since="86 days ago" --pretty=format:"%H")
+COMMITS=$(git log "$BRANCH_NAME" --merges --since="84 days ago" --pretty=format:"%H")
 
 if [ -z "$COMMITS" ]; then
-  echo "Nenhum commit de merge encontrado nos últimos 14 dias."
+  echo "Nenhum commit de merge encontrado nos últimos 84 dias."
   exit 0
 fi
 
