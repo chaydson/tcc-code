@@ -1,0 +1,6 @@
+--- Job: SAST ---
+ WARN  SAST  pre_script
+
+--- Job: SCA ---
+ WARN  SCA  pre_script
+
