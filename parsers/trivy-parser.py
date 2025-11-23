@@ -1,77 +1,80 @@
 import pandas as pd
 import json
+import glob
+import os
 
-def analyze_trivy_json_report(filename="../raw-data/baseline/trivy-reports/trivy-report.json"):
+def analyze_merges_trivy(base_path="../raw-data/merges"):
     """
-    Analisa um relatório JSON do Trivy usando Pandas, extrai
-    vulnerabilidades e segredos, e os conta por nível de severidade.
+    Percorre a pasta de merges, lê os relatórios do Trivy (que podem conter
+    vulnerabilidades e segredos) e gera um DataFrame consolidado com as 
+    contagens por severidade.
     """
-    print(f"--- Analisando o relatório '{filename}' ---")
     
-    try:
-        # Abre e carrega o arquivo JSON
-        with open(filename, 'r', encoding='utf-8') as f:
-            data = json.load(f)
+    search_pattern = os.path.join(base_path, "*", "artifacts", "trivy-report.json")
+    files = glob.glob(search_pattern)
 
-        all_findings = []
+    if not files:
+        print(f"Nenhum arquivo encontrado no padrão: {search_pattern}")
+        return
+
+    results = []
+
+    print(f"Encontrados {len(files)} relatórios do Trivy. Processando...")
+
+    for filepath in files:
+        try:
+            path_parts = os.path.normpath(filepath).split(os.sep)
+            commit_hash = path_parts[-3]
+
+            with open(filepath, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+
+            trivy_results = data.get("Results", [])
+            
+            commit_severities = []
+            
+            for result in trivy_results:
+                for vuln in result.get("Vulnerabilities", []):
+                    commit_severities.append(vuln.get("Severity"))
+                
+                for secret in result.get("Secrets", []):
+                    commit_severities.append(secret.get("Severity"))
+
+            row = {'commit_hash': commit_hash}
+
+            if commit_severities:
+                counts = pd.Series(commit_severities).value_counts().to_dict()
+                row.update(counts)
+                row['total_findings'] = len(commit_severities)
+            else:
+                row['total_findings'] = 0
+
+            results.append(row)
+
+        except Exception as e:
+            print(f"Erro ao processar {filepath}: {e}")
+
+    if results:
+        df_final = pd.DataFrame(results)
         
-        # Extrai a lista de "Results"
-        results = data.get("Results", [])
+        df_final = df_final.fillna(0)
 
-        if not results:
-            print("Nenhum resultado (Results) encontrado no relatório.")
-            return
-
-        # Itera sobre cada "Target" (ex: Gemfile.lock, yarn.lock, etc.)
-        for result in results:
-            # Extrai vulnerabilidades de dependências
-            vulnerabilities = result.get("Vulnerabilities", [])
-            for vuln in vulnerabilities:
-                all_findings.append({
-                    "Target": result.get("Target"),
-                    "Type": "Vulnerability",
-                    "ID": vuln.get("VulnerabilityID"),
-                    "Package": vuln.get("PkgName"),
-                    "Severity": vuln.get("Severity")
-                })
-
-            # Extrai segredos encontrados
-            secrets = result.get("Secrets", [])
-            for secret in secrets:
-                 all_findings.append({
-                    "Target": result.get("Target"),
-                    "Type": "Secret",
-                    "ID": secret.get("RuleID"),
-                    "Package": "N/A", # Segredos não têm pacotes
-                    "Severity": secret.get("Severity")
-                })
-
-        if not all_findings:
-            print("Nenhuma vulnerabilidade ou segredo encontrado nos resultados.")
-            return
-
-        # Carrega todas as descobertas em um DataFrame do Pandas
-        df = pd.DataFrame(all_findings)
-
-        # Verifica se a coluna 'Severity' existe
-        if "Severity" not in df.columns:
-            print("A coluna 'Severity' não foi encontrada.")
-            return
-
-        # Usa .value_counts() para contar os valores únicos na coluna 'Severity'
-        severity_counts = df['Severity'].value_counts()
+        severity_order = ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW', 'UNKNOWN']
         
-        print(f"\nTotal de problemas encontrados: {len(df)}")
-        print("\n--- Contagem por Nível de Severidade ---")
-        print(severity_counts)
+        existing_severities = [col for col in severity_order if col in df_final.columns]
+        
+        final_cols = ['commit_hash'] + existing_severities + ['total_findings']
+        remaining_cols = [c for c in df_final.columns if c not in final_cols]
+        
+        df_final = df_final[final_cols + remaining_cols]
 
-    except FileNotFoundError:
-        print(f"Erro: O arquivo '{filename}' não foi encontrado.")
-    except json.JSONDecodeError:
-        print(f"Erro: O arquivo '{filename}' não é um JSON válido.")
-    except Exception as e:
-        print(f"Ocorreu um erro inesperado: {e}")
+        print("\n--- Resumo dos Merges Processados (Trivy) ---")
+        print(df_final.to_string(index=False))
+        return df_final
 
-# Executa a função
+    else:
+        print("Nenhum resultado foi extraído dos arquivos.")
+        return pd.DataFrame()
+
 if __name__ == "__main__":
-    analyze_trivy_json_report()
+    analyze_merges_trivy()

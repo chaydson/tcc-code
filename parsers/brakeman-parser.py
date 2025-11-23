@@ -1,52 +1,68 @@
 import pandas as pd
 import json
+import glob
+import os
 
-def analyze_brakeman_json_report(filename="../raw-data/baseline/brakeman-reports/brakeman-report.json"):
+def analyze_merges_brakeman(base_path="../raw-data/merges"):
     """
-    Analisa um relatório JSON do Brakeman e conta
-    as vulnerabilidades por nível.
+    Percorre a pasta de merges, lê os relatórios do Brakeman
+    e gera um DataFrame consolidado com as contagens por nível de confiança.
     """
-    try:
-        # Abre e carrega o arquivo JSON
-        with open(filename, 'r', encoding='utf-8') as f:
-            data = json.load(f)
+    search_pattern = os.path.join(base_path, "*", "artifacts", "brakeman-report.json")
+    files = glob.glob(search_pattern)
 
-        # Extrai a lista de 'warnings'
-        warnings_list = data.get("warnings")
+    if not files:
+        print(f"Nenhum arquivo encontrado no padrão: {search_pattern}")
+        return
 
-        if not warnings_list:
-            print("Nenhuma vulnerabilidade (warnings) encontrada no relatório.")
-            return
+    results = []
 
-        # Carrega a lista de warnings diretamente em um DataFrame
-        df = pd.DataFrame(warnings_list)
+    print(f"Encontrados {len(files)} relatórios. Processando...")
 
-        # Verifica se a coluna 'confidence' existe
-        if "confidence" not in df.columns:
-            print("A coluna 'confidence' não foi encontrada nos warnings.")
-            return
+    for filepath in files:
+        try:
+            path_parts = os.path.normpath(filepath).split(os.sep)
+            commit_hash = path_parts[-3]
+
+            with open(filepath, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+
+            warnings_list = data.get("warnings", [])
             
-        # Pega o total de 'scan_info' para verificação
-        total_warnings = data.get("scan_info", {}).get("security_warnings", 0)
-        print(f"Total de vulnerabilidades encontradas: {total_warnings}\n")
+            row = {'commit_hash': commit_hash}
 
-        # Usa .value_counts() para contar os valores únicos na coluna 'confidence'
-        confidence_counts = df['confidence'].value_counts()
+            if warnings_list:
+                df_temp = pd.DataFrame(warnings_list)
+                
+                if "confidence" in df_temp.columns:
+                    counts = df_temp['confidence'].value_counts().to_dict()
+                    row.update(counts)
+                else:
+                    print(f"Aviso: Coluna 'confidence' não encontrada em {commit_hash}")
+            
+            row['total_scan_info'] = data.get("scan_info", {}).get("security_warnings", 0)
+            
+            results.append(row)
 
-        print("--- Contagem por Nível ---")
-        print(confidence_counts)
+        except Exception as e:
+            print(f"Erro ao processar {filepath}: {e}")
 
-        # Verificação opcional
-        if confidence_counts.sum() != total_warnings:
-            print(f"\nAviso: A soma das contagens ({confidence_counts.sum()}) não bate com o total ({total_warnings}).")
+    if results:
+        df_final = pd.DataFrame(results)
+        df_final = df_final.fillna(0)
 
-    except FileNotFoundError:
-        print(f"Erro: O arquivo '{filename}' não foi encontrado.")
-    except json.JSONDecodeError:
-        print(f"Erro: O arquivo '{filename}' não é um JSON válido.")
-    except Exception as e:
-        print(f"Ocorreu um erro inesperado: {e}")
+        cols = ['commit_hash', 'High', 'Medium', 'Weak', 'total_scan_info']
+        cols = [c for c in cols if c in df_final.columns] 
+        remaining_cols = [c for c in df_final.columns if c not in cols]
+        df_final = df_final[cols + remaining_cols]
 
-# Executa a função
+        print("\n--- Resumo dos Merges Processados ---")
+        print(df_final.to_string(index=False))
+        return df_final
+        
+    else:
+        print("Nenhum resultado foi extraído dos arquivos.")
+        return pd.DataFrame()
+
 if __name__ == "__main__":
-    analyze_brakeman_json_report()
+    analyze_merges_brakeman(base_path="../raw-data/merges")

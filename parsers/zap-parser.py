@@ -1,65 +1,84 @@
 import pandas as pd
 import json
+import glob
+import os
 
-def analyze_zap_json_report(filename="../raw-data/baseline/zap-reports/baseline-report.json"):
+def analyze_merges_zap(base_path="../raw-data/merges"):
     """
-    Analisa um relatório JSON do OWASP ZAP, agrupa pelo 'riskcode'
-    (o nível de risco principal) e soma o número de instâncias.
+    Percorre a pasta de merges, lê os relatórios do OWASP ZAP 
+    (geralmente baseline-report.json), agrupa por nível de risco 
+    e soma as instâncias (count).
     """
-    print(f"--- Analisando o relatório '{filename}' ---")
     
-    try:
-        # Abre e carrega o arquivo JSON
-        with open(filename, 'r', encoding='utf-8') as f:
-            data = json.load(f)
+    search_pattern = os.path.join(base_path, "*", "artifacts", "zap-report.json")
+    files = glob.glob(search_pattern)
 
-        # Acessa a lista de alertas
-        alerts_list = data.get("site", [{}])[0].get("alerts", [])
+    if not files:
+        print(f"Nenhum arquivo encontrado no padrão: {search_pattern}")
+        return
 
-        if not alerts_list:
-            print("Nenhuma lista de 'alerts' encontrada no relatório.")
-            return
+    results = []
 
-        # Carrega a lista de alertas (agrupados) em um DataFrame
-        df = pd.DataFrame(alerts_list)
+    print(f"Encontrados {len(files)} relatórios do ZAP. Processando...")
 
-        # Mapeia os 'riskcode' (que são strings) para os nomes de Risco
-        risk_map = {
-            "3": "High",
-            "2": "Medium",
-            "1": "Low",
-            "0": "Informational"
-        }
-        
-        # Cria a nova coluna 'Risk Level' baseada no mapeamento
-        # .get() previne erros se um 'riskcode' inesperado aparecer
-        df['Risk Level'] = df['riskcode'].apply(lambda x: risk_map.get(x, f"Unknown ({x})"))
+    for filepath in files:
+        try:
+            path_parts = os.path.normpath(filepath).split(os.sep)
+            commit_hash = path_parts[-3]
 
-        # Converte a coluna 'count' (que é uma string) para número
-        df['count'] = pd.to_numeric(df['count'])
+            with open(filepath, 'r', encoding='utf-8') as f:
+                data = json.load(f)
 
-        # Agrupa pelo novo 'Risk Level' e SOMA as 'count' (instâncias)
-        severity_counts = df.groupby('Risk Level')['count'].sum()
+            site_data = data.get("site", [{}])[0]
+            alerts_list = site_data.get("alerts", [])
 
-        # Reordena o índice para seguir a ordem de severidade
+            row = {'commit_hash': commit_hash}
+            total_instances = 0
+
+            if alerts_list:
+                df_temp = pd.DataFrame(alerts_list)
+
+                risk_map = {
+                    "3": "High",
+                    "2": "Medium",
+                    "1": "Low",
+                    "0": "Informational"
+                }
+
+                df_temp['Risk Level'] = df_temp['riskcode'].apply(lambda x: risk_map.get(x, f"Unknown ({x})"))
+                
+                df_temp['count'] = pd.to_numeric(df_temp['count'], errors='coerce').fillna(0)
+
+                grouped = df_temp.groupby('Risk Level')['count'].sum()
+                
+                row.update(grouped.to_dict())
+                
+                total_instances = grouped.sum()
+            
+            row['total_instances'] = total_instances
+            results.append(row)
+
+        except Exception as e:
+            print(f"Erro ao processar {filepath}: {e}")
+
+    if results:
+        df_final = pd.DataFrame(results)
+    
+        df_final = df_final.fillna(0)
         ordered_levels = ["High", "Medium", "Low", "Informational"]
-        # .reindex() garante que todos os níveis apareçam, mesmo que tenham 0 alertas
-        final_counts = severity_counts.reindex(ordered_levels, fill_value=0)
+        cols_to_show = [col for col in ordered_levels if col in df_final.columns]
+        final_cols = ['commit_hash'] + cols_to_show + ['total_instances']
+        remaining = [c for c in df_final.columns if c not in final_cols]
+        df_final = df_final[final_cols + remaining]
 
-        print(f"\nTotal de instâncias de alertas encontradas: {df['count'].sum()}")
-        print("\n--- Contagem de INSTÂNCIAS por Nível de Risco ---")
-        print(final_counts)
-        
+        print("\n--- Resumo dos Merges Processados (ZAP) ---")
+        print(df_final.to_string(index=False))
 
-    except FileNotFoundError:
-        print(f"Erro: O arquivo '{filename}' não foi encontrado.")
-    except json.JSONDecodeError:
-        print(f"Erro: O arquivo '{filename}' não é um JSON válido.")
-    except IndexError:
-        print("Erro: A estrutura do JSON 'site' não era a esperada (pode estar vazia).")
-    except Exception as e:
-        print(f"Ocorreu um erro inesperado: {e}")
+        return df_final
 
-# Executa a função
+    else:
+        print("Nenhum resultado foi extraído dos arquivos.")
+        return pd.DataFrame()
+
 if __name__ == "__main__":
-    analyze_zap_json_report()
+    analyze_merges_zap()
